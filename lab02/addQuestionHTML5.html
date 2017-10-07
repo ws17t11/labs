@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+  	<title>Add Question (HTML 5)</title>
+      <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+  	<link rel='stylesheet'
+  		   type='text/css'
+  		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+  		   href='stylesPWS/wide.css' />
+  	<link rel='stylesheet'
+  		   type='text/css'
+  		   media='only screen and (max-width: 480px)'
+  		   href='stylesPWS/smartphone.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <div id='page-wrap'>
+  	<header class='main' id='h1'>
+        <span class="right"><a href="/login">LogIn</a> </span>
+        <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
+  	<h2>Quiz: crazy questions</h2>
+      </header>
+  	<nav class='main' id='n1' role='navigation'>
+  		<span><a href='layout.html'>Home</a></span>
+  		<span><a href='/quizzes'>Quizzes</a></span>
+  		<span><a href='credits.html'>Credits</a></span>
+      <span><a href='addQuestion.html'>Add question</a></span>
+      <span><a href='addQuestionHTML5.html'>Add question (HTML 5)</a></span>
+  	</nav>
+    <section class="main" id="s1">
+      <div>
+        <form id="galderenF" name="galderenF" action="proba.php" style="text-align:left;">
+            Eposta (*): <input name="eposta" id="eposta" type="email" size="40" required
+                            pattern="[a-zA-Z]+[0-9]{3}@ikasle.ehu.(es|eus)"
+                            placeholder="Adib: izena123@ikasle.ehu.es"><br/><br/>
+            Galeraren enuntziatua (*): <br/>
+            <textarea name="galdera" id="galdera" rows="2" cols="40" pattern=".{10,}" required></textarea><br/><br/>
+            Erantzun zuzena (*): <input name="zuzena" id="zuzena" type="text" pattern=".{1,}" required><br/>
+            Erantzun okerra 1 (*): <input name="okerra1" id="okerra1" type="text" pattern=".{1,}" required><br/>
+            Erantzun okerra 2 (*): <input name="okerra2" id="okerra2" type="text" pattern=".{1,}" required><br/>
+            Erantzun okerra 3 (*): <input name="okerra3" id="okerra3" type="text" pattern=".{1,}" required><br/>
+            Galderaren zailtasuna (*): <select name="zailtasuna" id="zailtasuna" >
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
+                                          <option value="5">5</option>
+                                        </select><br/>
+            Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text" pattern=".{1,}" required><br/><br/>
+            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file"><br/>
+            <input type="reset" value="Garbitu"> <input type="submit" value="Bidali">
+        </form>
+      </div>
+    </section>
+  	<footer class='main' id='f1'>
+  		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+  		<a href='https://github.com'>Link GITHUB</a>
+  	</footer>
+  </div>
+
+
+
+</body>
+</html>
