@@ -18,7 +18,10 @@ nav span             	{margin: 0px 10px 0px 0px;
 #s1						{background-color: #d1b3ff;}
 #f1 					{background-color: #ffcc99;}
 
-img 					{height: 165px; width: 120px; float: right;
+.credit_img 			{height: 165px; width: 120px; float: right;
 						 margin-left: 15px; border-radius: 25px;}
 
-#ErrorMsgs          	{color: #f61; font-size: smaler:;}
+#gal_irudi				{float: right; margin-top: -200px; position: absolute;
+						 margin-left: 500px;}
+
+#ErrorMsgs          	{color: #f61; font-size: smaler;}

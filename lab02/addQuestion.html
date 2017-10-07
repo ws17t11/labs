@@ -32,7 +32,7 @@
       <div>
         <form id="galderenF" name="galderenF" action="proba.php" style="text-align:left;">
             Eposta (*): <input name="eposta" id="eposta" type="text" size="40" placeholder="Adib: izena123@ikasle.ehu.es"><br/><br/>
-            Galeraren enuntziatua (*): <br/>
+            Galderaren enuntziatua (*): <br/>
             <textarea name="galdera" id="galdera" rows="2" cols="40"></textarea><br/><br/>
             Erantzun zuzena (*): <input name="zuzena" id="zuzena" type="text"><br/>
             Erantzun okerra 1 (*): <input name="okerra1" id="okerra1" type="text"><br/>
@@ -46,7 +46,7 @@
                                           <option value="5">5</option>
                                         </select><br/>
             Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text"><br/><br/>
-            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file"><br/>
+            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file" accept="image/*"><br/>
             <input type="reset" value="Garbitu"> <input type="submit" value="Bidali">
         </form>
       </div>
@@ -61,14 +61,14 @@
     $(document).ready(function(){
         $("#galderenF").submit(function(){
             //balidatu eposta
-            var emailRegex = /[a-zA-Z]+[0-9]{3}@ikasle.ehu.(es|eus)$/;
+            var emailRegex = /[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)$/;
             if(! emailRegex.test($("#eposta").val()) ) {
-              alert("Eposta ez du EHU-ko formatua! Adib: izena123@ikasle.ehu.es");
+              alert("Epostak ez du EHU-ko formatua! Adib: izena123@ikasle.ehu.es");
               return false;
             }
             //balidatu galderaren luzera egokia dela
             if( $("#galdera").val().length < 10 ){
-               alert("Galderaren enuntziatua gutxienez 10 karaktere izan behar ditu!");
+               alert("Galderaren enuntziatuak gutxienez 10 karaktere izan behar ditu!");
                return false;
             }
             //balidatu erantzunak ez daudela hutsik
@@ -87,7 +87,22 @@
 
             return true;
         });
-    });
+
+        $("#irudia").change(function(e){
+        	var img = $("<img></img>");
+        	img.attr("name", "gal_irudi");
+        	img.attr("id", "gal_irudi");
+      		img.attr("height", "150px");
+      		img.attr("max-width", "200px");
+      		$("#galderenF").append(img);
+      		var files = e.target.files;
+   			var fr = new FileReader();
+    		fr.onload = function () {
+     			$("#gal_irudi").attr("src", fr.result);
+    		}
+    		fr.readAsDataURL(files[0]);
+    	});
+	});               
   </script>
 
 
