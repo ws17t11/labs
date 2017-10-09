@@ -30,7 +30,7 @@
   	</nav>
     <section class="main" id="s1">
       <div>
-        <form id="galderenF" name="galderenF" action="proba.php" style="text-align:left;">
+        <form action="proba.php" id="galderenF" name="galderenF" style="text-align:left;">
             Eposta (*): <input name="eposta" id="eposta" type="text" size="40" placeholder="Adib: izena123@ikasle.ehu.es"><br/><br/>
             Galderaren enuntziatua (*): <br/>
             <textarea name="galdera" id="galdera" rows="2" cols="40"></textarea><br/><br/>
@@ -46,8 +46,8 @@
                                           <option value="5">5</option>
                                         </select><br/>
             Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text"><br/><br/>
-            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file" accept="image/*"><br/>
-            <input type="reset" value="Garbitu"> <input type="submit" value="Bidali">
+            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file" accept="image/*" ><br/>
+            <input type="submit" value="Bidali"> <input type="reset" id="garbitu" value="Garbitu">
         </form>
       </div>
     </section>
@@ -58,6 +58,7 @@
   </div>
 
   <script type="text/javascript">
+
     $(document).ready(function(){
         $("#galderenF").submit(function(){
             //balidatu eposta
@@ -88,21 +89,63 @@
             return true;
         });
 
+        //erabiltzailea irudi bat aukeratzen duenean
         $("#irudia").change(function(e){
+          //irudia jadanik existitzen bada (aurretik bat aukeratu badu)
+          if($("#gal_irudi").length){
+             $("#gal_irudi").remove(); //ezabatu irudia
+             $("#irudia_kendu_btn").remove(); //ezabatu irudia kentzeko botoia
+          }
         	var img = $("<img></img>");
         	img.attr("name", "gal_irudi");
         	img.attr("id", "gal_irudi");
       		img.attr("height", "150px");
       		img.attr("max-width", "200px");
       		$("#galderenF").append(img);
+
+          /*var btn = $('<input>');
+          btn.attr("name", "kendu_irudia");
+          btn.attr("id", "kendu_irudia");
+          btn.attr("type", "button");
+          btn.attr("value", "Kendu irudia");*/
+          //$("#gal_irudi").after(btn);
+
       		var files = e.target.files;
-   			var fr = new FileReader();
-    		fr.onload = function () {
-     			$("#gal_irudi").attr("src", fr.result);
-    		}
-    		fr.readAsDataURL(files[0]);
-    	});
-	});               
+   			  var fr = new FileReader();
+    		  fr.onload = function () {
+     			    $("#gal_irudi").attr("src", fr.result);
+    		  }
+    		  fr.readAsDataURL(files[0]);
+
+        //sortu botoi bat irudia kentzeko aukera edukitzeko
+        function createButton() {
+            return $('<input/>', {
+                type: 'button',
+                value: 'Kendu irudia',
+                id: 'irudia_kendu_btn',
+                click: kenduIrudia
+            });
+        }
+        $('#gal_irudi').after(createButton());
+
+        function kenduIrudia() {
+          $("#gal_irudi").remove(); //kendu irudia
+          $("#irudia").val(""); //garbitu fitxategi hautatzailearen balioa
+          $("#irudia_kendu_btn").remove(); //kendu sakatu berri den botoia :)
+        }
+
+      });
+
+      $("#garbitu").click(function(){
+        //irudiren bat aukeratu bada, ezabatu
+        if($("#gal_irudi").length){
+          $("#gal_irudi").remove(); //kendu irudia
+          $("#irudia").val(""); //garbitu fitxategi hautatzailearen balioa
+          $("#irudia_kendu_btn").remove(); //kendu sakatu berri den botoia :)
+        }
+      });
+
+	});
   </script>
 
 
