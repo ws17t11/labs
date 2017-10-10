@@ -30,7 +30,7 @@
   	</nav>
     <section class="main" id="s1">
       <div>
-        <form id="galderenF" name="galderenF" action="proba.php" style="text-align:left;">
+        <form action="proba.php" method="post" id="galderenF" name="galderenF" style="text-align:left;" enctype="multipart/form-data">
             Eposta (*): <input name="eposta" id="eposta" type="email" size="40" required
                             pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
                             placeholder="Adib: izena123@ikasle.ehu.es"
@@ -50,7 +50,7 @@
                                         </select><br/>
             Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text" pattern=".{1,}" required><br/><br/>
             Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file"><br/>
-            <input type="submit" value="Bidali"> <input type="reset" value="Garbitu">
+            <input type="submit" value="Bidali"> <input type="reset" id="garbitu" value="Garbitu">
         </form>
       </div>
     </section>
@@ -71,12 +71,13 @@
             }
 
             // irudiaren etiketa eta atributuak definitzen dira
-            var img = $("<img></img>");
-            img.attr("name", "gal_irudi");
-            img.attr("id", "gal_irudi");
-            img.attr("height", "150px");
-            img.attr("max-width", "200px");
-            $("#galderenF").append(img);
+            var img = $('<img></img>', {
+                            id: 'gal_irudi',
+                            name: 'gal_irudi',
+                            height: '150px',
+                            maxwidth: '200px'
+                        });
+            $("#galderenF").append(img); //irudia gehitu formularioan
 
             // Igo diren fitxategien lista files aldagaian
             var files = e.target.files;
@@ -89,16 +90,13 @@
             fr.readAsDataURL(files[0]);
 
             //sortu botoi bat irudia kentzeko aukera edukitzeko
-            function createButton() {
-                return $('<input/>', {
-                    type: 'button',
-                    value: 'Kendu irudia',
-                    id: 'irudia_kendu_btn',
-                    click: kenduIrudia
-                });
-            }
-            
-            $('#gal_irudi').after(createButton());
+            var nwbtn = $('<input/>', {
+                            type: 'button',
+                            value: 'Kendu irudia',
+                            id: 'irudia_kendu_btn',
+                            click: kenduIrudia
+                          });
+            $('#gal_irudi').after(nwbtn); //sartu botoia formularioan
 
             function kenduIrudia() {
                 $("#gal_irudi").remove(); //kendu irudia
@@ -107,14 +105,15 @@
             }
         });
 
-        $("#garbitu").click(function(){
-            //irudiren bat aukeratu bada, ezabatu
-            if($("#gal_irudi").length){
-                $("#gal_irudi").remove(); //kendu irudia
-                $("#irudia").val(""); //garbitu fitxategi hautatzailearen balioa
-                $("#irudia_kendu_btn").remove(); //kendu sakatu berri den botoia :)
-            }
-        });
+        //reset botoiari click egitean, irudi bat hautatu egin bada, ezabatu
+    		$("#garbitu").click(function(){
+    			//irudiren bat aukeratu bada, ezabatu
+    			if($("#gal_irudi").length){
+    				$("#gal_irudi").remove(); //kendu irudia
+    				$("#irudia").val(""); //garbitu fitxategi hautatzailearen balioa
+    				$("#irudia_kendu_btn").remove(); //kendu sakatu berri den botoia :)
+    			}
+    		});
 
   });
 
