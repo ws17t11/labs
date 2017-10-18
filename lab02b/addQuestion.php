@@ -43,9 +43,9 @@
     }
 
     //Datu basearekin konexioa sortu
-    $local = 1;
+    $local = 0;
     if($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-    else $link = mysqli_connect("localhsot", "ws17t11", "vadisala", "id2921428_quiz");
+    else $link = mysqli_connect("localhost", "id2921428_ws17t11", "vadisala", "id2921428_quiz");
     //erroreren bat egon bada, mezu bat igorri
     if(mysqli_connect_errno()){ //edo if(!link){
       echo ("Errora datu basearekin konexioa sortzean: " . mysqli_connect_error());
