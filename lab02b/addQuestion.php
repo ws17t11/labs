@@ -9,7 +9,6 @@
     $zailtasuna = $_POST["zailtasuna"];
     $gaia = trim($_POST["gaia"]);
     //%irudia = ...
-
     //Formularioaren datuak balidatu
     if(preg_match('/^[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)$/' , $eposta)!=1){
       echo "ERROREA! Eposta ez du formatu egokia!<br>" ;
@@ -41,27 +40,25 @@
       echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"addQuestion.html"' . ">Galdera sartu</a>";
       exit();
     }
-
     //Datu basearekin konexioa sortu
-    $local = 0;
+
+
+    $local = 1;
     if($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-    else $link = mysqli_connect("localhost", "id2921428_ws17t11", "vadisala", "id2921428_quiz");
+    else $link = mysqli_connect("localhost", "id2921428_ws17t11", "", "id2921428_quiz");
     //erroreren bat egon bada, mezu bat igorri
     if(mysqli_connect_errno()){ //edo if(!link){
       echo ("Errora datu basearekin konexioa sortzean: " . mysqli_connect_error());
       exit();
     }
-
     //sartu balioak questions taulan
     $sql = "INSERT INTO questions (eposta, galdera, zuzena, okerra1, okerra2, okerra3, zailtasuna, gaia)
     VALUES ('$eposta', '$galdera', '$zuzena', '$okerra1', '$okerra2', '$okerra3', $zailtasuna,'$gaia')";
-
     if ($link->query($sql) === TRUE) {
         echo "Datuak datu basean gorde egin dira!<br>";
     } else {
         echo "Errorea datuak sartzean, mesedez, saiatu berriz";
     }
-
     //itxi konexioa
     mysqli_close($link);
 ?>
