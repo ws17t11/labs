@@ -53,16 +53,14 @@
       exit();
     }
 
-    // Check if the image
-    if(isset($_FILES["irudia"])){
-    //if ($_POST && !empty($_FILES)) {
-        //Get image data
+    //Ziurtatu irudia kargatu dela
+    if(isset($_FILES['irudia']['tmp_name']) && $_FILES['irudia']['tmp_name']!=""){
+
         $path = $_FILES['irudia']['tmp_name'];
         $name = $_FILES['irudia']['name'];
         $size = $_FILES['irudia']['size'];
         $type = $_FILES['irudia']['type'];
 
-        // read file contents
         $content = file_get_contents($path);
 
         //$content = mysqli_real_escape_string($link, $content);
@@ -106,13 +104,11 @@
         //you keep your column name setting for insertion. I keep image type Blob.
         //$query = "INSERT INTO products (id,image) VALUES('','$image')";
         //$qry = mysqli_query($db, $query);
-
     }
     else{
-      echo "Zer demonio";
+      echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :)<br>";
       $content = "";
     }
-
 
     //sartu balioak questions taulan
     $sql = "INSERT INTO questions (eposta, galdera, zuzena, okerra1, okerra2, okerra3, zailtasuna, gaia, irudia)
@@ -120,20 +116,10 @@
 
     if ($link->query($sql) === TRUE) {
         echo "Datuak datu basean gorde egin dira!<br>";
+        echo 'Galderen zerrenda ikusteko (irudirik gabe) <a href="showQuestions.php">sakatu hemen</a><br>';
+        echo 'Galderen zerrenda ikusteko irudiekin <a href="showQuestionsWithImages.php">sakatu hemen</a><br>';
     } else {
-        echo "Errorea datuak sartzean, mesedez, saiatu berriz";
-    }
-
-    if(isset($_FILES["irudia"])){
-        echo "Sartutako irudia:<br>";
-
-        $sql = "SELECT * FROM questions WHERE id = 1";
-        $sth = $link->query($sql);
-        $result=mysqli_fetch_array($sth);
-        echo '<img src="data:image/jpeg;base64,'.base64_encode( $result['irudia'] ).'"/>';
-    }
-    else{
-      echo "Zer demonio";
+        echo 'Errorea datuak sartzean, mesedez, saiatu berriz <a href="addQuestion.html">esteka honen bidez</a><br>';
     }
 
     //itxi konexioa

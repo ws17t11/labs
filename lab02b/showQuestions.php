@@ -24,7 +24,7 @@
 			$taula = $link->query("SELECT * FROM questions");
 			$n = mysqli_num_rows($taula);
 
-			echo('<table>
+			echo('<table class="mytable">
                 <tr>
 					<th>Id</th>
 					<th>Eposta</th>

@@ -24,7 +24,7 @@
 			$taula = $link->query("SELECT * FROM questions");
 			$n = mysqli_num_rows($taula);
 
-			echo('<table>
+			echo('<table class="mytable">
                 <tr>
 					<th>Id</th>
 					<th>Eposta</th>
@@ -49,7 +49,7 @@
 					<td>$row[zailtasuna]</td>
 					<td>$row[gaia]</td>");
 					//galdera ez badu irudirik, defektuzko bat kargatu
-					if($row['irudia']===NULL){
+					if($row['irudia']===NULL || $row['irudia']==""){
 							//$default = addslashes(file_get_contents('img/default.png'));
 							//echo "<td><img src=" . '"data:image/jpeg;base64,'.base64_encode( $default ).'"/></td>';
 							echo '<td><img src="img/default.png" width="100" alt="Galdera hau ez du irudirik"/></td>';

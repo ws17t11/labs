@@ -56,8 +56,10 @@
     VALUES ('$eposta', '$galdera', '$zuzena', '$okerra1', '$okerra2', '$okerra3', $zailtasuna,'$gaia')";
     if ($link->query($sql) === TRUE) {
         echo "Datuak datu basean gorde egin dira!<br>";
+        echo 'Galderen zerrenda ikusteko (irudirik gabe) <a href="showQuestions.php">sakatu hemen</a><br>';
+        echo 'Galderen zerrenda ikusteko irudiekin <a href="showQuestionsWithImages.php">sakatu hemen</a><br>';
     } else {
-        echo "Errorea datuak sartzean, mesedez, saiatu berriz";
+        echo 'Errorea datuak sartzean, mesedez, saiatu berriz <a href="addQuestion.html">esteka honen bidez</a><br>';
     }
     //itxi konexioa
     mysqli_close($link);
