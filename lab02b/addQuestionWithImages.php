@@ -61,52 +61,10 @@
         $size = $_FILES['irudia']['size'];
         $type = $_FILES['irudia']['type'];
 
-        $content = file_get_contents($path);
-
-        //$content = mysqli_real_escape_string($link, $content);
-
-        // if ($_FILES['image']['error'] || !is_uploaded_file($path)) {
-        //     $formOk = false;
-        //     echo "Error: Error in uploading file. Please try again.";
-        // }
-        // //check file extension
-        // if ($formOk && !in_array($type, array('image/png', 'image/x-png', 'image/jpeg', 'image/pjpeg', 'image/gif'))) {
-        //     $formOk = false;
-        //     echo "Error: Unsupported file extension. Supported extensions are JPG / PNG.";
-        // }
-        // // check for file size.
-        // if ($formOk && filesize($path) > 500000) {
-        //     $formOk = false;
-        //     echo "Error: File size must be less than 500 KB.";
-        // }
-
-        // read file contents
-        // $content = file_get_contents($path);
-        //
-        // //connect to mysql database
-        // if ($conn = mysqli_connect('localhost', 'root', 'root', 'test')) {
-        //     $content = mysqli_real_escape_string($conn, $content);
-        //     //$sql = "insert into images (name, size, type, content) values ('{$name}', '{$size}', '{$type}', '{$content}')";
-        //
-        //     if (mysqli_query($conn, $sql)) {
-        //         $uploadOk = true;
-        //         $imageId = mysqli_insert_id($conn);
-        //     } else {
-        //         echo "Error: Could not save the data to mysql database. Please try again.";
-        //     }
-        //
-        //     mysqli_close($conn);
-        // } else {
-        //     echo "Error: Could not connect to mysql database. Please try again.";
-        // }
-
         $content = addslashes(file_get_contents($_FILES['irudia']['tmp_name']));
-        //you keep your column name setting for insertion. I keep image type Blob.
-        //$query = "INSERT INTO products (id,image) VALUES('','$image')";
-        //$qry = mysqli_query($db, $query);
     }
     else{
-      echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :)<br>";
+      //echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :)<br>";
       $content = "";
     }
 
