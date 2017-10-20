@@ -17,7 +17,7 @@
 
 		    //erroreren bat egon bada, mezu bat igorri
 		    if(mysqli_connect_errno()){ //edo if(!link){
-				echo ("Errora datu basearekin konexioa sortzean: " . mysqli_connect_error());
+				echo ("Errorea datu basearekin konexioa sortzean: " . mysqli_connect_error());
 				exit();
 		    }
 
@@ -35,6 +35,7 @@
 					<th>Okerra3</th>
 					<th>Zailtasuna</th>
 					<th>Gaia</th>
+					<th>Irudia</th>
                 </tr>');
 			while($row = $taula->fetch_assoc()){
 				echo("<tr>
@@ -46,8 +47,17 @@
 					<td>$row[okerra2]</td>
 					<td>$row[okerra3]</td>
 					<td>$row[zailtasuna]</td>
-					<td>$row[gaia]</td>
-				</tr>");
+					<td>$row[gaia]</td>");
+					//galdera ez badu irudirik, defektuzko bat kargatu
+					if($row['irudia']===NULL){
+							//$default = addslashes(file_get_contents('img/default.png'));
+							//echo "<td><img src=" . '"data:image/jpeg;base64,'.base64_encode( $default ).'"/></td>';
+							echo '<td><img src="img/default.png" width="100" alt="Galdera hau ez du irudirik"/></td>';
+					}
+					else{
+							echo "<td><img src=" . '"data:image/jpeg;base64,'.base64_encode( $row['irudia'] ).'" width="100" alt="Galdera hau ez du irudirik"/></td>';
+					}
+				echo '</tr>';
 			}
 			echo '</table>';
 
