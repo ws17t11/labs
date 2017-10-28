@@ -24,7 +24,14 @@ nav span             	{margin: 0px 10px 0px 0px;
 #gal_irudi				{float: right; margin-top: -200px; position: absolute;
 						 margin-left: 500px;}
 
+#main 					{margin-left: 300px; margin-top: 50px;}
 
+#erregistroa > .text	{margin-right: 50%; float: right; width: 320px;}
+
+#ezaugarriak			{float: right; margin-right: 50px; margin-top: -170px; position: static;}
+
+#reg_irudi				{float: right; margin-top: -50px; position: absolute;
+						 margin-left: 500px;}
 
 	table.mytable {
 	    border-collapse: collapse;
