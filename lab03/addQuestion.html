@@ -63,6 +63,7 @@
 
     $(document).ready(function(){
         $("#galderenF").submit(function(){
+            return true;
             //balidatu eposta
             var emailRegex = /^[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)$/;
             if(! emailRegex.test($("#eposta").val()) ) {
