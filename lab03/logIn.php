@@ -17,14 +17,36 @@
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <span class="right"><a href="logIn.php">LogIn</a> </span>
+      <?php
+        if (isset($_GET["eposta"])) {
+            echo '<span class="right"> <a href="layout.html">LogOut</a> </span>';
+          } else {
+            echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+          }
+      ?>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 	    <h2>Quiz: crazy questions</h2>
   </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.html'>Home</a></span>
-		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='credits.html'>Credits</a></span>
+		<?php
+      if (isset($_GET["eposta"])) {
+        $email = trim($_GET["eposta"]);
+
+        echo('<span><a href="layout.html?eposta=$email">Home</a></span>');
+        echo('<span><a href="/quizzes">Quizzes</a></span>');
+        echo('<span><a href="credits.html?eposta=$email">Credits</a></span>');
+      
+        echo('<span><a href="addQuestion.html?eposta=$email">Add question</a></span>');
+        echo('<span><a href="addQuestionHTML5.html?eposta=$email">Add question (HTML 5)</a></span>');
+        echo('<span><a href="showQuestions.php?eposta=$email">Galderak ikusi (irudirik gabe)</a></span>');
+        echo('<span><a href="showQuestionsWithImages.php?eposta=$email">Galderak ikusi (irudiekin)</a></span>');
+      } else {
+        echo('<span><a href="layout.html">Home</a></span>');
+        echo('<span><a href="/quizzes">Quizzes</a></span>');
+        echo('<span><a href="credits.html">Credits</a></span>');
+        echo('<span><a href="signUp.php">Erregistratu</a></span>');
+      }
+    ?>
 	</nav>
     <section class="main" id="s1">
 
@@ -63,10 +85,13 @@
 						$login_result = $link->query($login_query);
 						$nrows = mysqli_num_rows($login_result);
 						if($nrows==1){
-              echo 'Kaixo, '. $_POST["eposta"] . '!!!<br><br>';
+              //echo 'Kaixo, '. $_POST["eposta"] . '!!!<br><br>';
               $logeatuta = TRUE;
-						}
-            else{
+              $new_user = $login_result->fetch_assoc();
+              $email = $new_user[eposta];
+              header("Location: welcome.php?eposta=$email");
+              exit(); 
+						} else {
                 echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
             }
 
@@ -74,7 +99,7 @@
           if(!isset($_POST["eposta"]) || $logeatuta===FALSE) {
 
             //dagoeneko logeatzen saiatu bada, ez aurkeztu hurrengo mezua, bestela bai
-            if(!isset($_POST["eposta"])) echo "Mesedez, sar ezazu zure datuak saioa hasteko!<br><br>";
+            if(!isset($_POST["eposta"])) echo "Mesedez, sar itzazu zure datuak saioa hasteko!<br><br>";
           ?>
             <form action="logIn.php" method="post" id="logInF" name="logInF" style="text-align:left;">
               <?php
@@ -84,8 +109,7 @@
               ?>
               Eposta: <input name="eposta" id="eposta" type="email" size="40" required
                               pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
-                              placeholder="asalanueva123@ikasle.ehu.es"
-                              title="asalanueva123@ikasle.ehu.eus"><br/><br/>
+                              title="placeholder="asalanueva123@ikasle.ehu.es"><br/><br/>
 
               <?php
                   if($passFormatuEgokia==FALSE){
@@ -97,7 +121,6 @@
             </form>
       <?php
           }
-
       ?>
 
     	</div>

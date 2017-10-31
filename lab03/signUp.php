@@ -18,20 +18,40 @@
 		<div id='page-wrap'>
 
 		<header class='main' id='h1'>
-			  <span class="right"><a href="/login">LogIn</a> </span>
+			<?php
+				if (isset($_GET["eposta"])) {
+			  		echo '<span class="right"> <a href="layout.html">LogOut</a> </span>';
+			  	} else {
+			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+			  	}
+			?>
 			  <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 			<h2>Quiz: crazy questions</h2>
 		</header>
 
 		<nav class='main' id='n1' role='navigation'>
-			<span><a href='layout.html'>Home</a></span>
-			<span><a href='/quizzes'>Quizzes</a></span>
-			<span><a href='credits.html'>Credits</a></span>
-			<span><a href='addQuestion.html'>Add question</a></span>
-			<span><a href='addQuestionHTML5.html'>Add question (HTML 5)</a></span>
-			<span><a href='showQuestions.php'>Galderak ikusi (irudirik gabe)</a></span>
-			<span><a href='showQuestionsWithImages.php'>Galderak ikusi (irudiekin)</a></span>
-			<span><a href='signUp.php'>Erregistratu</a></span>
+		<?php
+			if (isset($_GET["eposta"])) {
+				$email = trim($_GET["eposta"]);
+
+				echo('<span><a href="layout.html?eposta=$email">Home</a></span>');
+				echo('<span><a href="/quizzes">Quizzes</a></span>');
+				echo('<span><a href="credits.html?eposta=$email">Credits</a></span>');
+			
+				echo('<span><a href="addQuestion.html?eposta=$email">Add question</a></span>');
+				echo('<span><a href="addQuestionHTML5.html?eposta=$email">Add question (HTML 5)</a></span>');
+				echo('<span><a href="showQuestions.php?eposta=$email">Galderak ikusi (irudirik gabe)</a></span>');
+				echo('<span><a href="showQuestionsWithImages.php?eposta=$email">Galderak ikusi (irudiekin)</a></span>');
+
+				echo('<span><a href="layout.html">Log out</a></span>');
+			} else {
+				echo('<span><a href="layout.html">Home</a></span>');
+				echo('<span><a href="/quizzes">Quizzes</a></span>');
+				echo('<span><a href="credits.html">Credits</a></span>');
+				echo('<span><a href="signUp.php">Erregistratu</a></span>');
+			}
+			
+		?>
 		</nav>
 
 		<section class='main' id='s1' style="text-align: left;">
@@ -120,8 +140,8 @@
 					        $content = addslashes(file_get_contents($_FILES['irudia']['tmp_name']));
 
 					    } else {
-								  //echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :) <br/>";
-									$content = "";
+							//echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :) <br/>";
+							$content = "";
 					    }
 
 						//sartu balioak users taulan, errorerik ez badaude
@@ -130,8 +150,11 @@
 						    				VALUES ('$eposta', '$izena', '$nick', '$pass', '$content')";
 
 						    if ($link->query($sql) === TRUE) {
-						        echo "Datuak datu basean gorde egin dira! <br/> <br/>";
-						        echo "Itzuli hasiera orrira <a href='layout.html'> hemen sakatuz! </a> <br/>";
+						   		echo "<script type='text/javascript'>"; 
+								echo "location = 'welcome.php?nick='$nick"; 
+								echo "</script>";
+						        //echo "Datuak datu basean gorde egin dira! <br/> <br/>";
+						        //echo "Itzuli hasiera orrira <a href='layout.html'> hemen sakatuz! </a> <br/>";
 						    } else {
 						        echo 'Errorea datuak sartzean, mesedez, saiatu berriz <a href="signUp.php">esteka honen bidez</a> <br/>';
 						    }
