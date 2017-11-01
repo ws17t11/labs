@@ -18,7 +18,7 @@
 		<div id='page-wrap'>
 
 		<header class='main' id='h1'>
-			  <span class="right"> <a href="login.php">LogIn</a> </span>
+			  <span class="right"> <a href="logIn.php">LogIn</a> </span>
 			  <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 			<h2>Quiz: crazy questions</h2>
 		</header>
@@ -152,8 +152,9 @@
 
 						    if ($link->query($sql) === TRUE) {
 						   		//echo "<script type='text/javascript'>";
-									header("Location:welcome.php?eposta=$eposta&image=$targetPath");
-									exit();
+									//header("Location:welcome.php?eposta=$eposta&image=$targetPath");
+									echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
+									die();
 									//echo "</script>";
 						        //echo "Datuak datu basean gorde egin dira! <br/> <br/>";
 						        //echo "Itzuli hasiera orrira <a href='layout.html'> hemen sakatuz! </a> <br/>";

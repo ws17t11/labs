@@ -17,7 +17,7 @@
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <span class="right"> <a href="login.php">LogIn</a> </span>
+      <span class="right"> <a href="logIn.php">LogIn</a> </span>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 	    <h2>Quiz: crazy questions</h2>
   </header>
@@ -86,8 +86,8 @@
               $new_user = $login_result->fetch_assoc();
               $email = $new_user[eposta];
               $image = $new_user[irudia];
-              header("Location:welcome.php?eposta=$email&image=$image");
-              exit();
+              echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
+              die();
 						} else {
                 echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
             }

@@ -30,7 +30,7 @@
 						}
 						echo '<a href="layout.php">LogOut</a>';
 			  	} else {
-			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+			  		echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
 						echo '<h2>Quiz: crazy questions</h2>';
 			  	}
 			?>
@@ -69,25 +69,25 @@
 					$email = trim($_GET["eposta"]);
 
 					//Datu basearekin konexioa sortu
-            		$local = 1;
-		            if ($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-		            else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
-		            //erroreren bat egon bada, mezu bat igorri
-		            if (mysqli_connect_errno()) {
+      		$local = 1;
+          if ($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
+          else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
+          //erroreren bat egon bada, mezu bat igorri
+          if (mysqli_connect_errno()) {
 						echo("Errorea datu basearekin konexioa sortzean. Mesedez, saiatu berriz.");
 						exit();
-		            }
+          }
 
-		            //datuak zuzenak direla ikusi
-            		$welcome_query = "SELECT * FROM users WHERE eposta= '" . $email . "'";
+          //datuak zuzenak direla ikusi
+      		$welcome_query = "SELECT * FROM users WHERE eposta= '" . $email . "'";
 					$welcome_result = $link->query($welcome_query);
 					$nrows = mysqli_num_rows($welcome_result);
 
 					if ($nrows == 1) {
 						$user = $welcome_result->fetch_assoc();
-              			$nick = $user['nick'];
+            $nick = $user['nick'];
 
-              			echo "<h3> Ongi Etorri! </h3> <br/>";
+            echo "<h3> Ongi Etorri! </h3> <br/>";
 						echo "Kaixo $nick! Ongi etorri gure Quiz: crazy questions orrira! <br/> <br/>";
 						echo "<p> Orain aukera duzu gure datubasera galderak igotzeko eta hauek ikusteko. </p>";
 					} else {

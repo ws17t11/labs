@@ -28,7 +28,7 @@
           }
           echo '<a href="layout.php">LogOut</a>';
         } else {
-          echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+          echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
           echo '<h2>Quiz: crazy questions</h2>';
         }
     ?>
