@@ -86,7 +86,7 @@
               $new_user = $login_result->fetch_assoc();
               $email = $new_user[eposta];
               $image = $new_user[irudia];
-              echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
+              echo "<script>location.href='welcome.php?eposta=$eposta&image=$image';</script>";
               die();
 						} else {
                 echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
