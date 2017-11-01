@@ -194,7 +194,7 @@
  							 ?>
 	            	Nick (*) : <input name="nick" id="nick" type="text" class="text" size="20" placeholder="Johnny"
 	            				required pattern="[A-Za-z0-9]+"> <br/> <br/>
-	            	Pasahitza (*) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}"> <br/><br/>
+	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}"> <br/><br/>
 	            	Pasahitza errepikatu (*) : <input name="pasahitza2" id="pasahitza2" type="password" class="text" pattern=".{6,}"> <br/> <br/>
 	            	Zure argazkia : <input name="irudia" id="irudia" type="file" accept="image/*"> <br/> <br/>
 	            	<input type="submit" id="bidali" value="Bidali"> <input type="reset" id="garbitu" value="Garbitu">
