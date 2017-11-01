@@ -20,7 +20,7 @@
 		<header class='main' id='h1'>
 			<?php
 				if (isset($_GET["eposta"])) {
-			  		echo '<span class="right"> <a href="layout.html">LogOut</a> </span>';
+			  		echo '<span class="right"> <a href="layout.php">LogOut</a> </span>';
 			  	} else {
 			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
 			  	}
@@ -30,28 +30,25 @@
 		</header>
 
 		<nav class='main' id='n1' role='navigation'>
-		<?php
-			if (isset($_GET["eposta"])) {
-				$email = trim($_GET["eposta"]);
+			<?php
+	      if (isset($_GET["eposta"])) {
+	        $email = trim($_GET["eposta"]);
 
-				echo('<span><a href="layout.html?eposta=$email">Home</a></span>');
-				echo('<span><a href="/quizzes">Quizzes</a></span>');
-				echo('<span><a href="credits.html?eposta=$email">Credits</a></span>');
-			
-				echo('<span><a href="addQuestion.html?eposta=$email">Add question</a></span>');
-				echo('<span><a href="addQuestionHTML5.html?eposta=$email">Add question (HTML 5)</a></span>');
-				echo('<span><a href="showQuestions.php?eposta=$email">Galderak ikusi (irudirik gabe)</a></span>');
-				echo('<span><a href="showQuestionsWithImages.php?eposta=$email">Galderak ikusi (irudiekin)</a></span>');
+	        echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+	        echo('<span><a href="/quizzes">Quizzes</a></span>');
+	        echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
 
-				echo('<span><a href="layout.html">Log out</a></span>');
-			} else {
-				echo('<span><a href="layout.html">Home</a></span>');
-				echo('<span><a href="/quizzes">Quizzes</a></span>');
-				echo('<span><a href="credits.html">Credits</a></span>');
-				echo('<span><a href="signUp.php">Erregistratu</a></span>');
-			}
-			
-		?>
+	        echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
+	        echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
+	        echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
+	        echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+	      } else {
+	        echo('<span><a href="layout.php">Home</a></span>');
+	        echo('<span><a href="/quizzes">Quizzes</a></span>');
+	        echo('<span><a href="credits.php">Credits</a></span>');
+	        echo('<span><a href="signUp.php">Erregistratu</a></span>');
+	      }
+	    ?>
 		</nav>
 
 		<section class='main' id='s1' style="text-align: left;">
@@ -71,27 +68,27 @@
 					    //Formularioaren datuak balidatu
 					    if(preg_match('/^[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)$/' , $eposta)!=1){
 								echo "ERROREA! Epostak ez du formatu egokia!<br>" ;
-								echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
 					    if(preg_match('/^[A-Z][a-z]*( +[A-Z][a-z]*){1,}$/', $izena)!=1){
 								echo "ERROREA! Izen-deiturek gutxienez 2 hitz izan behar dituzte, lehenengo letra larria izanik eta ondorengoak xeheak<br>";
-								echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
 					    if(preg_match('/^[A-Za-z0-9]+$/', $nick)!=1){
 								echo "ERROREA! Ezizenean ezin dira hutsunerik edota karaktere berezirik agertu<br>";
-								echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
 					    if(strlen($pass) < 6){
 								echo "ERROREA! Idatzitako pasahitzak 6 karaktere edo  gehiago izan behar ditu<br>";
-								echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
 					    if(strcmp($pass,$pass2) != 0){
 								echo "ERROREA! Idatzitako pasahitzak berdinak izan behar dira<br>";
-								echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
 
@@ -150,9 +147,10 @@
 						    				VALUES ('$eposta', '$izena', '$nick', '$pass', '$content')";
 
 						    if ($link->query($sql) === TRUE) {
-						   		echo "<script type='text/javascript'>"; 
-								echo "location = 'welcome.php?nick='$nick"; 
-								echo "</script>";
+						   		//echo "<script type='text/javascript'>";
+									header("Location:welcome.php?eposta=$eposta");
+									exit();
+									//echo "</script>";
 						        //echo "Datuak datu basean gorde egin dira! <br/> <br/>";
 						        //echo "Itzuli hasiera orrira <a href='layout.html'> hemen sakatuz! </a> <br/>";
 						    } else {
@@ -216,6 +214,7 @@
 		    $(document).ready(function(){
 		        $("#erregistroa").submit(function(){
 		            //balidatu eposta
+								return true;
 								if($('#pasahitza').val() !== $('#pasahitza2').val()){
 									alert("Pasahitzak ez dira berdinak!");
 									return false;

@@ -16,19 +16,35 @@
 <body>
   <div id='page-wrap'>
   	<header class='main' id='h1'>
-        <span class="right"><a href="/login">LogIn</a> </span>
-        <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
+      <?php
+				if (isset($_GET["eposta"])) {
+			  		echo '<span class="right"> <a href="layout.php">LogOut</a> </span>';
+			  	} else {
+			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+			  	}
+			?>
   	<h2>Quiz: crazy questions</h2>
       </header>
   	<nav class='main' id='n1' role='navigation'>
-  	  <span><a href="layout.html">Home</a></span>
-      <span><a href="/quizzes">Quizzes</a></span>
-      <span><a href="credits.html">Credits</a></span>
-      
-      <span><a href="addQuestion.html">Add question</a></span>
-      <span><a href="addQuestionHTML5.html">Add question (HTML 5)</a></span>
-      <span><a href="showQuestions.php">Galderak ikusi (irudirik gabe)</a></span>
-      <span><a href="showQuestionsWithImages.php">Galderak ikusi (irudiekin)</a></span>
+      <?php
+        if (isset($_GET["eposta"])) {
+          $email = trim($_GET["eposta"]);
+
+          echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+          echo('<span><a href="/quizzes">Quizzes</a></span>');
+          echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
+
+          echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
+          echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
+          echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
+          echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+        } else {
+          echo('<span><a href="layout.php">Home</a></span>');
+          echo('<span><a href="/quizzes">Quizzes</a></span>');
+          echo('<span><a href="credits.php">Credits</a></span>');
+          echo('<span><a href="signUp.php">Erregistratu</a></span>');
+        }
+      ?>
 
       <!--<span><a href="layout.html">Log out</a></span> -->
   	</nav>

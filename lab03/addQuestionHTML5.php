@@ -17,29 +17,54 @@
 <body>
   <div id='page-wrap'>
   	<header class='main' id='h1'>
-        <span class="right"><a href="/login">LogIn</a> </span>
-        <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
+      <?php
+				if (isset($_GET["eposta"])) {
+			  		echo '<span class="right"> <a href="layout.php">LogOut</a> </span>';
+			  	} else {
+			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+			  	}
+			?>
   	<h2>Quiz: crazy questions</h2>
       </header>
   	<nav class='main' id='n1' role='navigation'>
-  		<span><a href="layout.html">Home</a></span>
-      <span><a href="/quizzes">Quizzes</a></span>
-      <span><a href="credits.html">Credits</a></span>
-      
-      <span><a href="addQuestion.html">Add question</a></span>
-      <span><a href="addQuestionHTML5.html">Add question (HTML 5)</a></span>
-      <span><a href="showQuestions.php">Galderak ikusi (irudirik gabe)</a></span>
-      <span><a href="showQuestionsWithImages.php">Galderak ikusi (irudiekin)</a></span>
+      <?php
+        if (isset($_GET["eposta"])) {
+          $email = trim($_GET["eposta"]);
 
+          echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+          echo('<span><a href="/quizzes">Quizzes</a></span>');
+          echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
+
+          echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
+          echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
+          echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
+          echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+        } else {
+          echo('<span><a href="layout.php">Home</a></span>');
+          echo('<span><a href="/quizzes">Quizzes</a></span>');
+          echo('<span><a href="credits.php">Credits</a></span>');
+          echo('<span><a href="signUp.php">Erregistratu</a></span>');
+        }
+      ?>
       <!--<span><a href="layout.html">Log out</a></span> -->
   	</nav>
     <section class="main" id="s1">
       <div>
         <form action="addQuestionWithImages.php" method="post" id="galderenF" name="galderenF" style="text-align:left;" enctype="multipart/form-data">
-            Eposta (*): <input name="eposta" id="eposta" type="email" size="40" required
-                            pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
-                            placeholder="Adib: izena123@ikasle.ehu.es"
-                            title="izena123@ikasle.ehu.eus"><br/><br/>
+
+          <?php
+            //logeatuta baldin badago, eposta automatikoki sartu
+            if (isset($_GET["eposta"])) {
+             //echo 'Eposta (*): <input name="eposta" id="eposta" type="text" size="40" value="' . $_GET["eposta"] . '" disabled><br/><br/>';
+             echo 'Eposta (*): <input name="eposta" id="eposta" type="email" size="40" value="' . $_GET["eposta"] . '"><br/><br/>';
+            }
+            else{
+              echo 'Eposta (*): <input name="eposta" id="eposta" type="email" size="40" required
+                              pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
+                              placeholder="Adib: izena123@ikasle.ehu.es"
+                              title="izena123@ikasle.ehu.eus"><br/><br/>';
+            }
+           ?>
             Galderaren enuntziatua (*): <br/>
             <textarea name="galdera" id="galdera" rows="2" cols="40" pattern=".{10,}" required></textarea><br/><br/>
             Erantzun zuzena (*): <input name="zuzena" id="zuzena" type="text" pattern=".{1,}" required><br/>

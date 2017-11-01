@@ -20,51 +20,53 @@
 		<header class='main' id='h1'>
 			<?php
 				if (isset($_GET["eposta"])) {
-			  		echo '<span class="right"> <a href="layout.html">LogOut</a> </span>';
+						echo '<h2>Quiz: crazy questions</h2>';
+						echo 'Kaixo, ' . $_GET["eposta"] . '<br>';
+						echo '<img height="50" width="50" src="img/default.png"><br>';
+						echo '<a href="layout.php">LogOut</a>';
 			  	} else {
 			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
+						echo '<h2>Quiz: crazy questions</h2>';
 			  	}
 			?>
-			  <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
-			<h2>Quiz: crazy questions</h2>
 		</header>
 
 		<nav class='main' id='n1' role='navigation'>
-		<?php
-			if (isset($_GET["eposta"])) {
-				$email = trim($_GET["eposta"]);
+			<?php
+	      if (isset($_GET["eposta"])) {
+	        $email = trim($_GET["eposta"]);
 
-				echo('<span><a href="layout.html?eposta=$email">Home</a></span>');
-				echo('<span><a href="/quizzes">Quizzes</a></span>');
-				echo('<span><a href="credits.html?eposta=$email">Credits</a></span>');
-			
-				echo('<span><a href="addQuestion.html?eposta=$email">Add question</a></span>');
-				echo('<span><a href="addQuestionHTML5.html?eposta=$email">Add question (HTML 5)</a></span>');
-				echo('<span><a href="showQuestions.php?eposta=$email">Galderak ikusi (irudirik gabe)</a></span>');
-				echo('<span><a href="showQuestionsWithImages.php?eposta=$email">Galderak ikusi (irudiekin)</a></span>');
-			} else {
-				echo('<span><a href="layout.html">Home</a></span>');
-				echo('<span><a href="/quizzes">Quizzes</a></span>');
-				echo('<span><a href="credits.html">Credits</a></span>');
-				echo('<span><a href="signUp.php">Erregistratu</a></span>');
-			}
-		?>
+	        echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+	        echo('<span><a href="/quizzes">Quizzes</a></span>');
+	        echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
+
+	        echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
+	        echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
+	        echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
+	        echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+	      } else {
+	        echo('<span><a href="layout.php">Home</a></span>');
+	        echo('<span><a href="/quizzes">Quizzes</a></span>');
+	        echo('<span><a href="credits.php">Credits</a></span>');
+	        echo('<span><a href="signUp.php">Erregistratu</a></span>');
+	      }
+	    ?>
 		</nav>
 
 		<section class='main' id='s1' style="text-align: left;">
-			
+
 			<?php
-			
+
 				if (isset($_GET["eposta"])) {
-					
+
 					$email = trim($_GET["eposta"]);
-					
+
 					//Datu basearekin konexioa sortu
             		$local = 1;
 		            if ($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
 		            else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
 		            //erroreren bat egon bada, mezu bat igorri
-		            if (mysqli_connect_errno()) { 
+		            if (mysqli_connect_errno()) {
 						echo("Errorea datu basearekin konexioa sortzean. Mesedez, saiatu berriz.");
 						exit();
 		            }
@@ -73,7 +75,7 @@
             		$welcome_query = "SELECT * FROM users WHERE eposta= '" . $email . "'";
 					$welcome_result = $link->query($welcome_query);
 					$nrows = mysqli_num_rows($welcome_result);
-					
+
 					if ($nrows == 1) {
 						$user = $welcome_result->fetch_assoc();
               			$nick = $user['nick'];
@@ -89,9 +91,9 @@
 				} else {
 					echo "<h3> Saiorik hasi gabe </h3>";
 					echo "<p> Ez zaude logeatuta. Saioa hasteko sakatu <a href='logIn.php'>hemen</a>. Ez baduzu erabiltzailerik, sortu ezazu bat <a href='signUp.php'>hemen</a>.";
-				}			
+				}
 			?>
-		
+
 		</section>
 
 		<footer class='main' id='f1'>
