@@ -17,29 +17,25 @@
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <?php
-        if (isset($_GET["eposta"])) {
-            echo '<span class="right"> <a href="layout.php">LogOut</a> </span>';
-          } else {
-            echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
-          }
-      ?>
+      <span class="right"> <a href="login.php">LogIn</a> </span>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 	    <h2>Quiz: crazy questions</h2>
   </header>
 	<nav class='main' id='n1' role='navigation'>
     <?php
-      if (isset($_GET["eposta"])) {
+      if (isset($_GET["eposta"]) && isset($_GET["image"])) {
         $email = trim($_GET["eposta"]);
+        $image = trim($_GET["image"]);
+        $urlparams = 'eposta=' . $email .'&image=' . $image;
 
-        echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+        echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
         echo('<span><a href="/quizzes">Quizzes</a></span>');
-        echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
+        echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
 
-        echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
-        echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
-        echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
-        echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+        echo('<span><a href="addQuestion.php?' . $urlparams . '">Add question</a></span>');
+        echo('<span><a href="addQuestionHTML5.php?' . $urlparams . '">Add question (HTML 5)</a></span>');
+        echo('<span><a href="showQuestions.php?' . $urlparams . '">Galderak ikusi (irudirik gabe)</a></span>');
+        echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">Galderak ikusi (irudiekin)</a></span>');
       } else {
         echo('<span><a href="layout.php">Home</a></span>');
         echo('<span><a href="/quizzes">Quizzes</a></span>');
@@ -89,7 +85,8 @@
               $logeatuta = TRUE;
               $new_user = $login_result->fetch_assoc();
               $email = $new_user[eposta];
-              header("Location:welcome.php?eposta=$email");
+              $image = $new_user[irudia];
+              header("Location:welcome.php?eposta=$email&image=$image");
               exit();
 						} else {
                 echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';

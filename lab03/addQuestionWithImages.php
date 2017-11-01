@@ -16,7 +16,7 @@
       echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"addQuestion.html"' . ">Galdera sartu</a>";
       exit();
     }
-    if(strlen(str_replace(' ', '', $galdera))<=10){
+    if(strlen(str_replace(' ', '', $galdera))<10){
       echo "ERROREA! Galdera gutxienez 10 karaktere izan behar ditu<br>";
       echo "Mesedez, saiatu berriz hurrengo estela erabiliz: <a href=" . '"addQuestion.html"' . ">Galdera sartu</a>";
       exit();

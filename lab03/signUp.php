@@ -18,30 +18,26 @@
 		<div id='page-wrap'>
 
 		<header class='main' id='h1'>
-			<?php
-				if (isset($_GET["eposta"])) {
-			  		echo '<span class="right"> <a href="layout.php">LogOut</a> </span>';
-			  	} else {
-			  		echo '<span class="right"> <a href="login.php">LogIn</a> </span>';
-			  	}
-			?>
+			  <span class="right"> <a href="login.php">LogIn</a> </span>
 			  <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 			<h2>Quiz: crazy questions</h2>
 		</header>
 
 		<nav class='main' id='n1' role='navigation'>
 			<?php
-	      if (isset($_GET["eposta"])) {
+	      if (isset($_GET["eposta"]) && isset($_GET["image"])) {
 	        $email = trim($_GET["eposta"]);
+				  $image = trim($_GET["image"]);
+					$urlparams = 'eposta=' . $email .'&image=' . $image;
 
-	        echo('<span><a href="layout.php?eposta=' . $email .'">Home</a></span>');
+	        echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
 	        echo('<span><a href="/quizzes">Quizzes</a></span>');
-	        echo('<span><a href="credits.php?eposta=' . $email . '">Credits</a></span>');
+	        echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
 
-	        echo('<span><a href="addQuestion.php?eposta=' . $email . '">Add question</a></span>');
-	        echo('<span><a href="addQuestionHTML5.php?eposta=' . $email . '">Add question (HTML 5)</a></span>');
-	        echo('<span><a href="showQuestions.php?eposta=' . $email . '">Galderak ikusi (irudirik gabe)</a></span>');
-	        echo('<span><a href="showQuestionsWithImages.php?eposta=' . $email . '">Galderak ikusi (irudiekin)</a></span>');
+	        echo('<span><a href="addQuestion.php?' . $urlparams . '">Add question</a></span>');
+	        echo('<span><a href="addQuestionHTML5.php?' . $urlparams . '">Add question (HTML 5)</a></span>');
+	        echo('<span><a href="showQuestions.php?' . $urlparams . '">Galderak ikusi (irudirik gabe)</a></span>');
+	        echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">Galderak ikusi (irudiekin)</a></span>');
 	      } else {
 	        echo('<span><a href="layout.php">Home</a></span>');
 	        echo('<span><a href="/quizzes">Quizzes</a></span>');
@@ -134,27 +130,36 @@
 					        $size = $_FILES['irudia']['size'];
 					        $type = $_FILES['irudia']['type'];
 
-					        $content = addslashes(file_get_contents($_FILES['irudia']['tmp_name']));
+					        //$content = addslashes(file_get_contents($_FILES['irudia']['tmp_name']));
+
+									$directory = "img/users/";
+									$targetPath = time().$name;
+									$completePath = $directory.$targetPath;
+									if(!move_uploaded_file($_FILES['irudia']['tmp_name'], $completePath)){
+										 $error = 1;
+										 echo '<font color="red">Errorea irudia kargatzean. Mesedez, saiatu berriz</font><br>';
+									}
 
 					    } else {
-							//echo "Ez da irudirik kargatu, baina ez da ezer gertatzen :) <br/>";
-							$content = "";
+								  //default image
+									$targetPath = "default.png";
 					    }
 
 						//sartu balioak users taulan, errorerik ez badaude
 						if($error==0){
 						    $sql = "INSERT INTO users (eposta, izena, nick, pasahitza, irudia)
-						    				VALUES ('$eposta', '$izena', '$nick', '$pass', '$content')";
+						    				VALUES ('$eposta', '$izena', '$nick', '$pass', '$targetPath')";
 
 						    if ($link->query($sql) === TRUE) {
 						   		//echo "<script type='text/javascript'>";
-									header("Location:welcome.php?eposta=$eposta");
+									header("Location:welcome.php?eposta=$eposta&image=$targetPath");
 									exit();
 									//echo "</script>";
 						        //echo "Datuak datu basean gorde egin dira! <br/> <br/>";
 						        //echo "Itzuli hasiera orrira <a href='layout.html'> hemen sakatuz! </a> <br/>";
 						    } else {
-						        echo 'Errorea datuak sartzean, mesedez, saiatu berriz <a href="signUp.php">esteka honen bidez</a> <br/>';
+										$error = 1;
+						        echo '<font color="red">Errorea datuak sartzean, mesedez, saiatu berriz</font><br/>';
 						    }
 						}
 
@@ -214,7 +219,7 @@
 		    $(document).ready(function(){
 		        $("#erregistroa").submit(function(){
 		            //balidatu eposta
-								return true;
+								//return true;
 								if($('#pasahitza').val() !== $('#pasahitza2').val()){
 									alert("Pasahitzak ez dira berdinak!");
 									return false;
