@@ -1,0 +1,60 @@
+@charset "utf-8";
+* 						{margin: 0; padding: 0;}
+body					{font: 16px Georgia, serif;}
+
+#page-wrap				{margin: 2% auto; color: white;}
+#page-wrap >.main 		{border: 1px solid #999; padding: 1%;
+						 margin-bottom: 1px; color: black;}
+
+section > div			{padding: 20px;}
+header, nav, section	{background: #eee; text-align: center;}
+footer					{background: #eee; text-align: center;}
+nav span             	{margin: 0px 10px 0px 0px;
+						 width: 100%;
+						 display: inline-block;}
+
+#h1						{background-color: #e6ffe6;}
+#n1						{background-color: #b3f0ff;}
+#s1						{background-color: #d1b3ff;}
+#f1 					{background-color: #ffcc99;}
+
+.credit_img 			{height: 165px; width: 120px; float: right;
+						 margin-left: 15px; border-radius: 25px;}
+
+#gal_irudi				{float: right; margin-top: -200px; position: absolute;
+						 margin-left: 500px;}
+
+#main 					{margin-left: 300px; margin-top: 50px;}
+
+#erregistroa > .text	{margin-right: 50%; float: right; width: 320px;}
+
+#ezaugarriak			{float: right; margin-right: 50px; margin-top: -170px; position: static;}
+
+#reg_irudi				{float: right; margin-top: -50px; position: absolute;
+						 margin-left: 500px;}
+
+	table.mytable {
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+
+	table.mytable th {
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	table.mytable td {
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	table.mytable tr:nth-child(even){background-color: #f2f2f2}
+
+	table.mytable th {
+	    background-color: #4CAF50;
+	    color: white;
+	}
+
+
+
+#ErrorMsgs          	{color: #f61; font-size: smaler;}
