@@ -103,6 +103,7 @@
 
         echo 'Galderen zerrenda ikusteko (irudirik gabe) <a href="showQuestions.php">sakatu hemen</a><br>';
         echo 'Galderen zerrenda ikusteko irudiekin <a href="showQuestionsWithImages.php">sakatu hemen</a><br>';
+        echo 'XML fitxategiko galderak ikusteko <a href="showXMLQuestions.php">sakatu hemen</a><br>';
     } else {
         echo 'Errorea datuak sartzean, mesedez, saiatu berriz <a href="addQuestion.html">esteka honen bidez</a><br>';
     }

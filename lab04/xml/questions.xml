@@ -52,4 +52,4 @@
 			<value>Tximua</value>
 		</incorrectResponses>
 	</assessmentItem>
-</assessmentItems>
+<assessmentItem complexity="1" subject="Matematika"><itemBody><p>Zenbat da 1+1?</p></itemBody><correctResponse><value>2</value></correctResponse><incorrectResponses><value>3</value><value>1</value><value>i</value></incorrectResponses></assessmentItem></assessmentItems>
