@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="showQuestions.xsl"?>
 <assessmentItems>
 	<assessmentItem complexity="3" subject="mikologia">
 		<itemBody> 
@@ -52,4 +53,4 @@
 			<value>Tximua</value>
 		</incorrectResponses>
 	</assessmentItem>
-<assessmentItem complexity="1" subject="Matematika"><itemBody><p>Zenbat da 1+1?</p></itemBody><correctResponse><value>2</value></correctResponse><incorrectResponses><value>3</value><value>1</value><value>i</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="Datu Egiturak"><itemBody><p>Nola deitzen zaio grafo bati, planoan marraztuz gero, gurutzatzen diren ertzik ez baditu?</p></itemBody><correctResponse><value>planoa</value></correctResponse><incorrectResponses><value>zuzendua</value><value>aziklikoa</value><value>multigrafoa</value></incorrectResponses></assessmentItem></assessmentItems>
+</assessmentItems>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+		<title>Quizzes</title>
+		<link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+		<link rel='stylesheet'
+			  type='text/css'
+			  media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+			  href='stylesPWS/wide.css' />
+		<link rel='stylesheet'
+			  type='text/css'
+			  media='only screen and (max-width: 480px)'
+			  href='stylesPWS/smartphone.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body>
+
+    <h1>Erabiltzaileen informazioa lortu</h1>
+    <h2>Sartu erabiltzaile baten eposta helbidea bere informazioa lortzeko</h2><br>
+    <form id="userInfor" style="text-align:left;">
+      Erabiltzailaren eposta: <input name="eposta" id="eposta" type="email" size="40"
+                                pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
+                                placeholder="Adib: izena123@ikasle.ehu.es"
+                                title="izena123@ikasle.ehu.eus"><br/>
+      Telefonoa: <br/><input name="telefonoa" id="telefonoa" type="text" size="40" disabled><br/>
+      Izena:     <br/><input name="izena" id="izena" type="text" size="40" disabled><br/>
+      Abizenak:  <br/><input name="abizenak" id="abizenak" type="text" size="40" disabled><br/><br/>
+			<input type="button" id="bilatuBtn" value="Datuak lortu">
+    </form>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#bilatuBtn').click(function() {
+					$.get('erabiltzaileak.xml', function(d){
+						//erabiltzaile guztien nodoa eskuratu
+						var $epostenZer = $(d).find("erabiltzailea");
+
+						//erabiltzaile bakoitzeko, ikusi ea bilatzen ari garen eposta duen
+						var aurkituta = false;
+						$epostenZer.each(function(){
+							//lortu uneko erabiltzailearen eposta
+							var eposta = $(this).find('eposta').text();
+							//eposta kointziditzen badu
+							if(eposta===$('#eposta').val()){
+								//lortu datuak
+								var tlfn = $(this).find('telefonoa').text();
+								var izena = $(this).find('izena').text();
+								var abizenak = $(this).find('abizena1').text() + " " + $(this).find('abizena2').text();
+								//datuak gehitu formularioan
+								$('#telefonoa').val(tlfn);
+								$('#izena').val(izena);
+								$('#abizenak').val(abizenak);
+								aurkituta = true;
+							}
+						});
+						//bilatutako eposta helbidea duen erabiltzailerik ez badago
+						if(!aurkituta){
+							$('#telefonoa').val("");
+							$('#izena').val("");
+							$('#abizenak').val("");
+							alert("Ez dago eposta hori duen erabiltzailerik.\n Mesedez, saiatu beste batekin.");
+						}
+					})
+				})
+			});
+		</script>
+
+	</body>
+
+</html>
