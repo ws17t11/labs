@@ -6,6 +6,8 @@ body					{font: 16px Georgia, serif;}
 #page-wrap >.main 		{border: 1px solid #999; padding: 1%;
 						 margin-bottom: 1px; color: black;}
 
+#page-wrap > section 	{color: black;}
+
 section > div			{padding: 20px;}
 header, nav, section	{background: #eee; text-align: center;}
 footer					{background: #eee; text-align: center;}
@@ -16,8 +18,6 @@ nav span             	{margin: 0px 10px 0px 0px;
 
 #h1						{background-color: #e6ffe6;}
 #n1						{background-color: #b3f0ff;}
-#s1						{background-color: #d1b3ff;}
-#s2						{background-color: #F7E6F6;}
 #f1 					{background-color: #ffcc99;}
 
 .credit_img 			{height: 165px; width: 120px; float: right;
@@ -40,14 +40,10 @@ nav span             	{margin: 0px 10px 0px 0px;
 	    width: 100%;
 	}
 
-	table.mytable th {
+	table.mytable th, td {
 	    text-align: left;
 	    padding: 8px;
-	}
-
-	table.mytable td {
-	    text-align: left;
-	    padding: 8px;
+			border: 1px solid #fff;
 	}
 
 	table.mytable tr:nth-child(even){background-color: #f2f2f2}
@@ -55,6 +51,16 @@ nav span             	{margin: 0px 10px 0px 0px;
 	table.mytable th {
 	    background-color: #4CAF50;
 	    color: white;
+	}
+
+	table.credits{
+		margin-left:35%;
+	}
+
+	table.credits th, td {
+			text-align: center;
+			padding: 8px;
+			border: 0px;
 	}
 
 

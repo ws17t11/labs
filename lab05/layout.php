@@ -35,19 +35,15 @@
     </header>
 	<nav class='main' id='n1' role='navigation'>
     <?php
-      if (isset($_GET["eposta"]) && isset($_GET["image"])) {
+      if (isset($_GET["eposta"])) {
         $email = trim($_GET["eposta"]);
         $image = trim($_GET["image"]);
         $urlparams = 'eposta=' . $email .'&image=' . $image;
 
         echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
-        echo('<span><a href="/quizzes">Quizzes</a></span>');
-        echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
-
-        echo('<span><a href="addQuestion.php?' . $urlparams . '">Add question</a></span>');
-        echo('<span><a href="addQuestionHTML5.php?' . $urlparams . '">Add question (HTML 5)</a></span>');
-        echo('<span><a href="showQuestions.php?' . $urlparams . '">Galderak ikusi (irudirik gabe)</a></span>');
-        echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">Galderak ikusi (irudiekin)</a></span>');
+				echo('<span><a href="/quizzes">Quizzes</a></span>');
+				echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
+				echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
       } else {
         echo('<span><a href="layout.php">Home</a></span>');
         echo('<span><a href="/quizzes">Quizzes</a></span>');

@@ -44,43 +44,22 @@
 	        echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
 	        echo('<span><a href="/quizzes">Quizzes</a></span>');
 	        echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
-
-	        echo('<span><a href="addQuestion.php?' . $urlparams . '">Add question</a></span>');
-	        echo('<span><a href="addQuestionHTML5.php?' . $urlparams . '">Add question (HTML 5)</a></span>');
-	        echo('<span><a href="showQuestions.php?' . $urlparams . '">Galderak ikusi (irudirik gabe)</a></span>');
-	        echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">Galderak ikusi (irudiekin)</a></span>');
-	      } else {
-	        echo('<span><a href="layout.php">Home</a></span>');
-	        echo('<span><a href="/quizzes">Quizzes</a></span>');
-	        echo('<span><a href="credits.php">Credits</a></span>');
-	        echo('<span><a href="signUp.php">Erregistratu</a></span>');
+          echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
 	      }
 	    ?>
       <!--<span><a href="layout.html">Log out</a></span> -->
   	</nav>
     <section class="half1" id="s1">
       <div>
-        <form action="addQuestionWithImages.php" method="post" id="galderenF" name="galderenF" style="text-align:left;" enctype="multipart/form-data">
+        <form id="galderenF" name="galderenF" style="text-align:left;" enctype="multipart/form-data">
 
-          <?php
-            //logeatuta baldin badago, eposta automatikoki sartu
-            if (isset($_GET["eposta"])) {
-             //echo 'Eposta (*): <input name="eposta" id="eposta" type="text" size="40" value="' . $_GET["eposta"] . '" disabled><br/><br/>';
-             echo 'Eposta (*): <input name="eposta" id="eposta" type="email" size="40" value="' . $_GET["eposta"] . '"><br/><br/>';
-            }
-            else{
-              echo 'Eposta (*): <input name="eposta" id="eposta" type="email" size="40" required
-                              pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
-                              placeholder="Adib: izena123@ikasle.ehu.es"
-                              title="izena123@ikasle.ehu.eus"><br/><br/>';
-            }
-           ?>
+            <input type=button id="addBtn" value="Galdera sartu"><br>
             Galderaren enuntziatua (*): <br/>
-            <textarea name="galdera" id="galdera" rows="2" cols="40" pattern=".{10,}" required></textarea><br/><br/>
-            Erantzun zuzena (*): <input name="zuzena" id="zuzena" type="text" pattern=".{1,}" required><br/>
-            Erantzun okerra 1 (*): <input name="okerra1" id="okerra1" type="text" pattern=".{1,}" required><br/>
-            Erantzun okerra 2 (*): <input name="okerra2" id="okerra2" type="text" pattern=".{1,}" required><br/>
-            Erantzun okerra 3 (*): <input name="okerra3" id="okerra3" type="text" pattern=".{1,}" required><br/>
+            <textarea name="galdera" id="galdera" rows="2" cols="40"></textarea><br/><br/>
+            Erantzun zuzena (*): <input name="zuzena" id="zuzena" type="text"><br/>
+            Erantzun okerra 1 (*): <input name="okerra1" id="okerra1" type="text"><br/>
+            Erantzun okerra 2 (*): <input name="okerra2" id="okerra2" type="text"><br/>
+            Erantzun okerra 3 (*): <input name="okerra3" id="okerra3" type="text"><br/>
             Galderaren zailtasuna (*): <select name="zailtasuna" id="zailtasuna" >
                                           <option value="1">1</option>
                                           <option value="2">2</option>
@@ -88,24 +67,23 @@
                                           <option value="4">4</option>
                                           <option value="5">5</option>
                                         </select><br/>
-            Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text" pattern=".{1,}" required><br/><br/>
-            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file"><br/>
-            <input type="submit" value="Bidali"> <input type="reset" id="garbitu" value="Garbitu">
+            Galderaren gai-arloa (*): <input name="gaia" id="gaia" type="text"><br/><br/>
+            Galderarekin zerikusia duen irudia: <input name="irudia" id="irudia" type="file" accept="image/*" ><br/>
+            <input type="reset" id="garbitu" value="Garbitu">
         </form>
       </div>
-      <div>
-      </div>
-      <div>
+      <div id="addQuestionResponse">
+        Erantzuna
       </div>
     </section>
 
-    <section class="half2" id="s2">
-      <div>
-      </div>
-      <div>
-      </div>
-      <div>
-      </div>
+    <section class="half2" id="s2" style="text-align:left;">
+     <div>
+       <input type="button" id="showBtn" value="Galderak ikusi" style="text-align:left;"><br><br>
+       <div id="showQuestionsResponse">
+        <!--Hemen agertuko dira XML-ko galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean-->
+       </div>
+     </div>
     </section>
 
 
@@ -115,8 +93,96 @@
   	</footer>
   </div>
 
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+       //AJAX kontroladorea sortu galderak sortzeko
+       xhro_add = new XMLHttpRequest();
+       xhro_add.onreadystatechange = function(){
+          if(xhro_add.readyState==4 && xhro_add.status==200){
+            document.getElementById("addQuestionResponse").innerHTML=xhro_add.responseText;
+            //Id hau select bati dagokio, showQuestionsAJAX.php fitxategia sortuko duena
+            //galerak erakusteko botoia sakatzean. Beraz, dagoeneko galderak erakusteko
+            //select-a baldin badago dokumentuan, automatikoki eguneratu. Hurrengo
+            //baldintzarekin, select-a dokumentuan dagoen ikusiko dugu
+            if($("#xmlQuestions").length){
+              xhro_show.open("GET", "showQuestionsAJAX.php", true);
+              xhro_show.send("");
+              $('#showQuestionsResponse').effect('shake');
+              /*$('#showQuestionsResponse').animate({
+                  'margin-left': '-=5px',
+                  'margin-right': '+=5px'
+              });*/
+            }
+          }
+        }
+
+       //AJAX kontroladorea sortu galderak ikusteko
+        xhro_show = new XMLHttpRequest();
+        xhro_show.onreadystatechange = function(){
+           if(xhro_show.readyState==4 && xhro_show.status==200){
+             document.getElementById("showQuestionsResponse").innerHTML=xhro_show.responseText;
+           }
+         }
+
+       //Galdera gehitzeko botoia sakatzean, formularioa balidatu eta AJAX eskaera egin
+       $('#addBtn').click(function(){
+           //balidatu galderaren luzera egokia dela
+           if( $("#galdera").val().length < 10 ){
+              alert("Galderaren enuntziatuak gutxienez 10 karaktere izan behar ditu!");
+              return false;
+           }
+           //balidatu erantzunak ez daudela hutsik
+           if ($("#zuzena").val().length < 1  ||
+               $("#okerra1").val().length < 1 ||
+               $("#okerra2").val().length < 1 ||
+               $("#okerra3").val().length < 1 ){
+                 alert("Erantzun zuzena bat eta 3 oker sartu behar dira");
+                 return false;
+           }
+           //
+           if( $("#gaia").val().length < 1 ){
+              alert("Galderaren gaia sartu behar da");
+              return false;
+           }
+
+           xhro_add.open("POST", "addQuestionAJAX.php", true);
+           //xhro.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           /*var POSTparams = <?php echo '"eposta=' . $_GET["eposta"].'"'?>;
+           POSTparams = POSTparams + "&galdera=" + $('#galdera').val();
+           POSTparams = POSTparams + "&zuzena=" + $('#zuzena').val();
+           POSTparams = POSTparams + "&okerra1=" + $('#okerra1').val();
+           POSTparams = POSTparams + "&okerra2=" + $('#okerra2').val();
+           POSTparams = POSTparams + "&okerra3=" + $('#okerra3').val();
+           POSTparams = POSTparams + "&zailtasuna=" + $('#zailtasuna').val();
+           POSTparams = POSTparams + "&gaia=" + $('#gaia').val();
+           xhro.send(POSTparams);*/
+
+           //Bidali datuak formData objektua erabiliz!
+           var formElement = document.getElementById("galderenF");
+           //lortu formularioaren parametro guztiak
+           formData = new FormData(formElement);
+           //gehitu epostaren parametroa automatikoki
+           formData.append("eposta", <?php echo '"' . $_GET["eposta"] . '"'?>);
+             // Display the key/value pairs
+             /*for (var pair of formData.entries()) {
+                alert(pair[0]+ ', ' + pair[1]);
+            }*/
+           xhro_add.send(formData);
+           //xhro.send("");
+       });
+
+
+       //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
+       $('#showBtn').click(function(){
+           xhro_show.open("GET", "showQuestionsAJAX.php", true);
+           xhro_show.send("");
+       });
+
+
         //erabiltzaileak irudi bat aukeratzen duenean
         $("#irudia").change(function(e){
           //irudia jadanik existitzen bada (aurretik bat aukeratu badu)
@@ -129,8 +195,7 @@
             var img = $('<img></img>', {
                             id: 'gal_irudi',
                             name: 'gal_irudi',
-                            height: '150px',
-                            maxwidth: '200px'
+                            width: '128px'
                         });
             $("#galderenF").append(img); //irudia gehitu formularioan
 
