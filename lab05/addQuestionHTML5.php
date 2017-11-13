@@ -18,22 +18,24 @@
   <div id='page-wrap'>
   	<header class='main' id='h1'>
       <?php
-				if (isset($_GET["eposta"])) {
-						echo '<h2>Quiz: crazy questions</h2>';
-						echo 'Kaixo, ' . $_GET["eposta"] . '<br>';
-						//kargatu irudia
-						if (isset($_GET["image"])) {
-							echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
-						}else{
-							echo '<img height="50" width="50" src="img/users/default.png"><br>';
-						}
-						echo '<a href="layout.php">LogOut</a>';
-			  	} else {
-			  		echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
-						echo '<h2>Quiz: crazy questions</h2>';
-			  	}
-			?>
-      </header>
+      if (isset($_GET["eposta"])) {
+          echo '<h2>Quiz: crazy questions</h2><br/>';
+          echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
+          //kargatu irudia
+          echo '<div id="logo">';
+          if (isset($_GET["image"])) {
+            echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
+          }else{
+            echo '<img height="50" width="50" src="img/users/default.png"><br>';
+          }
+          echo '<a href="layout.php">LogOut</a>';
+          echo '</div>';
+        } else {
+          echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
+          echo '<h2>Quiz: crazy questions</h2>';
+        }
+      ?>
+    </header>
   	<nav class='main' id='n1' role='navigation'>
       <?php
 	      if (isset($_GET["eposta"]) && isset($_GET["image"])) {

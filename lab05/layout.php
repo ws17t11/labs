@@ -18,15 +18,17 @@
 	<header class='main' id='h1'>
     <?php
       if (isset($_GET["eposta"])) {
-          echo '<h2>Quiz: crazy questions</h2>';
-          echo 'Kaixo, ' . $_GET["eposta"] . '<br>';
+          echo '<h2>Quiz: crazy questions</h2><br/>';
+          echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
           //kargatu irudia
+          echo '<div id="logo">';
           if (isset($_GET["image"])) {
             echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
           }else{
             echo '<img height="50" width="50" src="img/users/default.png"><br>';
           }
           echo '<a href="layout.php">LogOut</a>';
+          echo '</div>';
         } else {
           echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
           echo '<h2>Quiz: crazy questions</h2>';
@@ -54,13 +56,11 @@
 		<!--<span><a href="layout.html">Log out</a></span> -->
 	</nav>
     <section class="main" id="s1">
-
-
-	<div>
-	Galderak erantzutea gustuko duzu? Hala bada, orrialde hau zuretzat pentsatuta dago!<br>
-  Bazenekien erabiltzaile erregistratuak galderak sortzeko aukera dutela?<br>
-  Ikaslea baldin bazara, ez itxaron gehiago eta <a href="signUp.php">erregistratu</a>!
-	</div>
+    	<div>
+    	Galderak erantzutea gustuko duzu? Hala bada, orrialde hau zuretzat pentsatuta dago!<br>
+      Bazenekien erabiltzaile erregistratuak galderak sortzeko aukera dutela?<br>
+      Ikaslea baldin bazara, ez itxaron gehiago eta <a href="signUp.php">erregistratu</a>!
+    	</div>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>

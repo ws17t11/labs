@@ -52,4 +52,4 @@
 			<value>Tximua</value>
 		</incorrectResponses>
 	</assessmentItem>
-</assessmentItems>
+<assessmentItem complexity="4" subject="Zerbait"><itemBody><p>Kaixoooooooooooooo</p></itemBody><correctResponse><value>Zer</value></correctResponse><incorrectResponses><value>Moduz</value><value>Zabiltza</value><value>apa</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="Argazkia"><itemBody><p>Non atera da argazki hau?</p></itemBody><correctResponse><value>Nire etxean</value></correctResponse><incorrectResponses><value>Zure etxean</value><value>Beste baten etxean</value><value>Parkean</value></incorrectResponses></assessmentItem></assessmentItems>
