@@ -39,17 +39,4 @@
 			<value>Errotariak</value>
 		</incorrectResponses>
 	</assessmentItem>
-	<assessmentItem complexity="4" subject="Animaliak" author="asalaberria009@ikasle.ehu.eus">
-		<itemBody>
-			<p>Zein da Gonzalo imitatzen ari den animalia hau?</p>
-		</itemBody>
-		<correctResponse>
-			<value>Panda Gorria</value>
-		</correctResponse>
-		<incorrectResponses>
-			<value>Bonoboa</value>
-			<value>Gorila</value>
-			<value>Tximua</value>
-		</incorrectResponses>
-	</assessmentItem>
-<assessmentItem complexity="1" subject="asdada" author="random000@ikasle.ehu.eus"><itemBody><p>a a a a a a a</p></itemBody><correctResponse><value>asd sa</value></correctResponse><incorrectResponses><value>asd a</value><value>asd a</value><value>asda</value></incorrectResponses></assessmentItem><assessmentItem complexity="1" subject="asdada" author="random000@ikasle.ehu.eus"><itemBody><p>a a a a a a a</p></itemBody><correctResponse><value>asd sa</value></correctResponse><incorrectResponses><value>asd a</value><value>asd a</value><value>asda</value></incorrectResponses></assessmentItem><assessmentItem complexity="1" subject="asd ad a" author="jvadillo123@ikasle.ehu.es"><itemBody><p>asd sa dasd as</p></itemBody><correctResponse><value>asda d</value></correctResponse><incorrectResponses><value>sad a</value><value>asd ad</value><value>asd asd</value></incorrectResponses></assessmentItem></assessmentItems>
+</assessmentItems>
