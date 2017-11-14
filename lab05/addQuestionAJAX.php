@@ -99,6 +99,7 @@
 
           $xml->asXML('xml/questions.xml');
           echo "Datuak XML fitxategian gorde dira ere!<br>";
+          
         } else {
           echo "Hala ere, arazoak egon dira XML fitxategian gordetzeko... :(<br>";
         }

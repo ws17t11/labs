@@ -52,4 +52,4 @@
 			<value>Tximua</value>
 		</incorrectResponses>
 	</assessmentItem>
-<assessmentItem complexity="1" subject="Animaliak" author="gpierola001@ikasle.ehu.eus"><itemBody><p>Nor naiz ni?</p></itemBody><correctResponse><value>Gonzalo</value></correctResponse><incorrectResponses><value>Ander</value><value>Jon</value><value>Elena</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="Matematika" author="gpierola001@ikasle.ehu.eus"><itemBody><p>Zenbat da 1 + 2?</p></itemBody><correctResponse><value>3</value></correctResponse><incorrectResponses><value>4</value><value>1</value><value>Pi</value></incorrectResponses></assessmentItem></assessmentItems>
+</assessmentItems>

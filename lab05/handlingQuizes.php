@@ -36,6 +36,7 @@
         } else {
           echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
           echo '<h2>Quiz: crazy questions</h2>';
+          echo "<script>alert('Logeatu zaitez lehendabizi orri hau ikusteko!'); location.href='logIn.php';</script>";
         }
       ?>
     </header>
@@ -80,7 +81,7 @@
           <!-- Hemen agertuko da galdera sartu ondorengo erantzuna -->
         </div>
       </div>
-      
+
     </section>
 
     <section class="half2" id="s2" style="text-align:left;">
@@ -109,7 +110,7 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        
+
         /**************************
         *** Lehenengo Hautazkoa ***
         ***************************/
@@ -118,7 +119,7 @@
         var url_string = window.location.href;
         var url = new URL(url_string);
         var eposta = url.searchParams.get("eposta");
-        
+
         //AJAX kontroladorea sortu galdera kopurua ikusteko
         function eguneratuGalderaKop() {
           xhro_n_quest.open("GET", "numberQuestions.php?eposta=" + eposta, true);
@@ -131,14 +132,14 @@
         xhro_n_quest.onreadystatechange = function(){
           if(xhro_n_quest.readyState==4 && xhro_n_quest.status==200){
             document.getElementById("numberQuestions").innerHTML = xhro_n_quest.responseText;
-          } 
+          }
         }
 
         /*************************
         *** Bigarren Hautazkoa ***
         **************************/
 
-        xhro_n_user = new XMLHttpRequest();        
+        xhro_n_user = new XMLHttpRequest();
         //AJAX kontroladorea sortu galdera kopurua ikusteko
         function eguneratuUserKop() {
           xhro_n_user.open("GET", "numberUsers.php", true);
@@ -151,7 +152,7 @@
         xhro_n_user.onreadystatechange = function(){
           if(xhro_n_user.readyState==4 && xhro_n_user.status==200){
             document.getElementById("numberUsers").innerHTML = xhro_n_user.responseText;
-          } 
+          }
         }
 
 
@@ -164,18 +165,15 @@
        xhro_add.onreadystatechange = function(){
           if(xhro_add.readyState==4 && xhro_add.status==200){
             document.getElementById("addQuestionResponse").innerHTML=xhro_add.responseText;
-            //Id hau select bati dagokio, showQuestionsAJAX.php fitxategia sortuko duena
+
+            //xmlQuestions Id-a taula bati dagokio, showQuestionsAJAX.php fitxategia sortuko duena
             //galerak erakusteko botoia sakatzean. Beraz, dagoeneko galderak erakusteko
             //select-a baldin badago dokumentuan, automatikoki eguneratu. Hurrengo
-            //baldintzarekin, select-a dokumentuan dagoen ikusiko dugu
+            //baldintzarekin, taula-a dokumentuan dagoen ikusiko dugu
             if($("#xmlQuestions").length){
               xhro_show.open("GET", "showQuestionsAJAX.php", true);
               xhro_show.send("");
               $('#showQuestionsResponse').effect('shake');
-              /*$('#showQuestionsResponse').animate({
-                  'margin-left': '-=5px',
-                  'margin-right': '+=5px'
-              });*/
             }
           }
         }
@@ -191,35 +189,26 @@
        //Galdera gehitzeko botoia sakatzean, formularioa balidatu eta AJAX eskaera egin
        $('#addBtn').click(function(){
            //balidatu galderaren luzera egokia dela
-           if( $("#galdera").val().length < 10 ){
+           if( $("#galdera").val().trim().length < 10 ){
               alert("Galderaren enuntziatuak gutxienez 10 karaktere izan behar ditu!");
               return false;
            }
            //balidatu erantzunak ez daudela hutsik
-           if ($("#zuzena").val().length < 1  ||
-               $("#okerra1").val().length < 1 ||
-               $("#okerra2").val().length < 1 ||
-               $("#okerra3").val().length < 1 ){
+           if ($("#zuzena").val().trim().length < 1  ||
+               $("#okerra1").val().trim().length < 1 ||
+               $("#okerra2").val().trim().length < 1 ||
+               $("#okerra3").val().trim().length < 1 ){
                  alert("Erantzun zuzena bat eta 3 oker sartu behar dira");
                  return false;
            }
            //
-           if( $("#gaia").val().length < 1 ){
+           if( $("#gaia").val().trim().length < 1 ){
               alert("Galderaren gaia sartu behar da");
               return false;
            }
 
            xhro_add.open("POST", "addQuestionAJAX.php", true);
            //xhro.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-           /*var POSTparams = <?php echo '"eposta=' . $_GET["eposta"].'"'?>;
-           POSTparams = POSTparams + "&galdera=" + $('#galdera').val();
-           POSTparams = POSTparams + "&zuzena=" + $('#zuzena').val();
-           POSTparams = POSTparams + "&okerra1=" + $('#okerra1').val();
-           POSTparams = POSTparams + "&okerra2=" + $('#okerra2').val();
-           POSTparams = POSTparams + "&okerra3=" + $('#okerra3').val();
-           POSTparams = POSTparams + "&zailtasuna=" + $('#zailtasuna').val();
-           POSTparams = POSTparams + "&gaia=" + $('#gaia').val();
-           xhro.send(POSTparams);*/
 
            //Bidali datuak formData objektua erabiliz!
            var formElement = document.getElementById("galderenF");
@@ -242,7 +231,7 @@
            xhro_show.send("");
        });
 
-        
+
 
 
 
