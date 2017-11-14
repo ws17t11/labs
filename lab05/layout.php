@@ -27,7 +27,7 @@
           }else{
             echo '<img height="50" width="50" src="img/users/default.png"><br>';
           }
-          echo '<a href="layout.php">LogOut</a>';
+          echo '<a href="logOut.php">LogOut</a>';
           echo '</div>';
         } else {
           echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';

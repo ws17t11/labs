@@ -86,6 +86,14 @@
               $new_user = $login_result->fetch_assoc();
               $email = $new_user[eposta];
               $image = $new_user[irudia];
+              /*Counter kontagailua eguneratu*/
+              $xml = simplexml_load_file('xml/counter.xml');
+              if ($xml) {
+                $xml->counter = $xml->counter + 1;
+                $xml->asXML('xml/counter.xml');
+              } else {
+                echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
+              }
               echo "<script>location.href='welcome.php?eposta=$eposta&image=$image';</script>";
               die();
 						} else {

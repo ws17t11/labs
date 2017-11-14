@@ -84,6 +84,7 @@
 
           $question->addAttribute('complexity', $zailtasuna);
           $question->addAttribute('subject', $gaia);
+          $question->addAttribute('author', $eposta);
 
           $body = $question->addChild('itemBody');
           $body->addChild('p', $galdera);

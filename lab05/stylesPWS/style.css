@@ -35,6 +35,10 @@ nav span             	{margin: 0px 10px 0px 0px; width: 100%; display: inline-bl
 
 #ezaugarriak			{float: right; margin-right: 50px; margin-top: -170px; position: static;}
 
+#numberQuestions		{text-align: center;}
+
+#numberUsers 			{text-align: left; font: 20px Georgia, serif; position: absolute; margin-left: 10px; margin-top: 25px;}
+
 
 /* Handling Quizzen addQuestion/showQuestions botoiak*/
 

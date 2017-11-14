@@ -17,6 +17,9 @@
 <body>
   <div id='page-wrap'>
   	<header class='main' id='h1'>
+      <div id="numberUsers">
+          <!-- Hemen agertuko da online dauden erabiltzaile kopurua -->
+      </div>
       <?php
       if (isset($_GET["eposta"])) {
           echo '<h2>Quiz: crazy questions</h2><br/>';
@@ -28,7 +31,7 @@
           }else{
             echo '<img height="50" width="50" src="img/users/default.png"><br>';
           }
-          echo '<a href="layout.php">LogOut</a>';
+          echo '<a href="logOut.php">LogOut</a>';
           echo '</div>';
         } else {
           echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
@@ -86,6 +89,10 @@
        <div id="showQuestionsResponse">
         <!--Hemen agertuko dira XML-ko galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean-->
        </div>
+       <br/> <br/>
+       <div id="numberQuestions">
+          <!-- Hemen agertuko da datu baseko galderen kopurua erabiltzailearen galderen kopuruarekiko -->
+        </div>
      </div>
     </section>
 
@@ -102,6 +109,56 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        
+        /**************************
+        *** Lehenengo Hautazkoa ***
+        ***************************/
+
+        xhro_n_quest = new XMLHttpRequest();
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var eposta = url.searchParams.get("eposta");
+        
+        //AJAX kontroladorea sortu galdera kopurua ikusteko
+        function eguneratuGalderaKop() {
+          xhro_n_quest.open("GET", "numberQuestions.php?eposta=" + eposta, true);
+          xhro_n_quest.send("");
+        }
+
+        eguneratuGalderaKop();
+        /*Galdera kopurua 20 segunduro eguneratzen da*/
+        var run = setInterval(function(){eguneratuGalderaKop();}, 20000);
+        xhro_n_quest.onreadystatechange = function(){
+          if(xhro_n_quest.readyState==4 && xhro_n_quest.status==200){
+            document.getElementById("numberQuestions").innerHTML = xhro_n_quest.responseText;
+          } 
+        }
+
+        /*************************
+        *** Bigarren Hautazkoa ***
+        **************************/
+
+        xhro_n_user = new XMLHttpRequest();        
+        //AJAX kontroladorea sortu galdera kopurua ikusteko
+        function eguneratuUserKop() {
+          xhro_n_user.open("GET", "numberUsers.php", true);
+          xhro_n_user.send("");
+        }
+
+        eguneratuUserKop();
+        /*Galdera kopurua 20 segunduro eguneratzen da*/
+        var run2 = setInterval(function(){eguneratuUserKop();}, 20000);
+        xhro_n_user.onreadystatechange = function(){
+          if(xhro_n_user.readyState==4 && xhro_n_user.status==200){
+            document.getElementById("numberUsers").innerHTML = xhro_n_user.responseText;
+          } 
+        }
+
+
+        /*********************
+        *** Derrigorrezkoa ***
+        **********************/
+
        //AJAX kontroladorea sortu galderak sortzeko
        xhro_add = new XMLHttpRequest();
        xhro_add.onreadystatechange = function(){
@@ -184,6 +241,9 @@
            xhro_show.open("GET", "showQuestionsAJAX.php", true);
            xhro_show.send("");
        });
+
+        
+
 
 
         //erabiltzaileak irudi bat aukeratzen duenean

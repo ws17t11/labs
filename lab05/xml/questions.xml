@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <assessmentItems>
-	<assessmentItem complexity="3" subject="mikologia">
+	<assessmentItem complexity="3" subject="mikologia" author="rarruabarrena001@ikasle.ehu.eus">
 		<itemBody>
 			<p>Zein Amanita da jangarria?</p>
 		</itemBody>
@@ -13,7 +13,7 @@
 			<value>Virosa</value>
 		</incorrectResponses>
 	</assessmentItem>
-	<assessmentItem complexity="3" subject="mikologia">
+	<assessmentItem complexity="3" subject="mikologia" author="rarruabarrena001@ikasle.ehu.eus">
 		<itemBody>
 			<p>Tripakiek zer dute kapela azpian?</p>
 		</itemBody>
@@ -26,7 +26,7 @@
 			<value>Hodiak</value>
 		</incorrectResponses>
 	</assessmentItem>
-	<assessmentItem complexity="5" subject="mikologia">
+	<assessmentItem complexity="5" subject="mikologia" author="rarruabarrena001@ikasle.ehu.eus">
 		<itemBody>
 			<p>Eranztuna du</p>
 		</itemBody>
@@ -39,7 +39,7 @@
 			<value>Errotariak</value>
 		</incorrectResponses>
 	</assessmentItem>
-	<assessmentItem complexity="4" subject="Animaliak">
+	<assessmentItem complexity="4" subject="Animaliak" author="asalaberria009@ikasle.ehu.eus">
 		<itemBody>
 			<p>Zein da Gonzalo imitatzen ari den animalia hau?</p>
 		</itemBody>
@@ -52,4 +52,4 @@
 			<value>Tximua</value>
 		</incorrectResponses>
 	</assessmentItem>
-<assessmentItem complexity="4" subject="Zerbait"><itemBody><p>Kaixoooooooooooooo</p></itemBody><correctResponse><value>Zer</value></correctResponse><incorrectResponses><value>Moduz</value><value>Zabiltza</value><value>apa</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="Argazkia"><itemBody><p>Non atera da argazki hau?</p></itemBody><correctResponse><value>Nire etxean</value></correctResponse><incorrectResponses><value>Zure etxean</value><value>Beste baten etxean</value><value>Parkean</value></incorrectResponses></assessmentItem></assessmentItems>
+<assessmentItem complexity="1" subject="Animaliak" author="gpierola001@ikasle.ehu.eus"><itemBody><p>Nor naiz ni?</p></itemBody><correctResponse><value>Gonzalo</value></correctResponse><incorrectResponses><value>Ander</value><value>Jon</value><value>Elena</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="Matematika" author="gpierola001@ikasle.ehu.eus"><itemBody><p>Zenbat da 1 + 2?</p></itemBody><correctResponse><value>3</value></correctResponse><incorrectResponses><value>4</value><value>1</value><value>Pi</value></incorrectResponses></assessmentItem></assessmentItems>
