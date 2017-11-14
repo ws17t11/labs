@@ -47,6 +47,7 @@
 				echo('<span><a href="/quizzes">Quizzes</a></span>');
 				echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
 				echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
+				echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">DB galderak ikusi</a></span>');
 	    ?>
 		</nav>
 

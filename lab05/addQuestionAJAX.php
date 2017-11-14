@@ -17,7 +17,7 @@
       echo "Mesedez, saiatu berriz";
       exit();
     }
-    if(strlen(str_replace(' ', '', $galdera))<10){
+    if(strlen(trim($galdera))<10){
       echo "ERROREA! Galdera gutxienez 10 karaktere izan behar ditu<br>";
       echo "Mesedez, saiatu berriz";
       exit();
@@ -99,7 +99,7 @@
 
           $xml->asXML('xml/questions.xml');
           echo "Datuak XML fitxategian gorde dira ere!<br>";
-          
+
         } else {
           echo "Hala ere, arazoak egon dira XML fitxategian gordetzeko... :(<br>";
         }

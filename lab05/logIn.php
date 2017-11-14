@@ -23,7 +23,7 @@
   </header>
 	<nav class='main' id='n1' role='navigation'>
     <?php
-      if (isset($_GET["eposta"]) && isset($_GET["image"])) {
+      if (isset($_GET["eposta"])) {
         $email = trim($_GET["eposta"]);
         $image = trim($_GET["image"]);
         $urlparams = 'eposta=' . $email .'&image=' . $image;

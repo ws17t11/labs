@@ -42,7 +42,7 @@
     </header>
   	<nav class='main' id='n1' role='navigation'>
       <?php
-	      if (isset($_GET["eposta"]) && isset($_GET["image"])) {
+	      if (isset($_GET["eposta"])) {
 	        $email = trim($_GET["eposta"]);
 				  $image = trim($_GET["image"]);
 					$urlparams = 'eposta=' . $email .'&image=' . $image;
@@ -51,6 +51,7 @@
 	        echo('<span><a href="/quizzes">Quizzes</a></span>');
 	        echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
           echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
+          echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">DB galderak ikusi</a></span>');
 	      }
 	    ?>
       <!--<span><a href="layout.html">Log out</a></span> -->
