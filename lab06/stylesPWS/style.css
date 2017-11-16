@@ -1,0 +1,76 @@
+@charset "utf-8";
+* 						{margin: 0; padding: 0;}
+body					{font: 16px Georgia, serif;}
+
+#page-wrap				{margin: 2% auto; color: white;}
+#page-wrap >.main 		{margin-bottom: 3px; color: black;}
+
+#page-wrap > section 	{color: black;}
+
+section > div			{padding: 20px;}
+header, nav, section	{background: #eee; text-align: center;}
+footer					{background: #eee; text-align: center;}
+nav span             	{margin: 0px 10px 0px 0px; width: 100%; display: inline-block;}
+
+
+#h1						{background-color: #e6ffe6;}
+#n1						{background-color: #b3f0ff;}
+#f1 					{background-color: #ffcc99;}
+
+
+/* kredituen irudiak */
+.credit_img 			{height: 165px; width: 120px; float: right; margin-left: 15px; border-radius: 25px;}
+
+/* erregistroaren irudia */
+#reg_irudi				{float: right; margin-top: -200px; position: absolute; margin-left: 50%;}
+
+/* galdera bat gehitzen den irudia */
+#gal_irudi				{float: right; margin-top: -200px; position: absolute; margin-left: 350px;}
+
+.img_aurp				{width: 15%; height: 20%;}
+
+#main 					{margin-left: 300px; margin-top: 50px;}
+
+#erregistroa > .text	{margin-right: 50%; float: right; width: 320px;}
+
+#ezaugarriak			{float: right; margin-right: 50px; margin-top: -170px; position: static;}
+
+#numberQuestions		{text-align: center;}
+
+#numberUsers 			{text-align: left; font: 20px Georgia, serif; position: absolute; margin-left: 10px; margin-top: 25px;}
+
+
+/* Handling Quizzen addQuestion/showQuestions botoiak*/
+
+#addBtn, #showBtn		{margin-left: 44%;}
+
+	table.mytable {
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+
+	table.mytable th, td {
+	    text-align: left;
+	    padding: 8px;
+		border: 1px solid #fff;
+	}
+
+	table.mytable tr:nth-child(even){background-color: #f2f2f2}
+
+	table.mytable th {
+	    background-color: #4CAF50;
+	    color: white;
+	}
+
+	table.credits{
+		margin-left:35%;
+	}
+
+	table.credits th, td {
+		text-align: center;
+		padding: 8px;
+		border: 0px;
+	}
+
+
+#ErrorMsgs          	{color: #f61; font-size: smaler;}
