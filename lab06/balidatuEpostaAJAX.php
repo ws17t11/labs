@@ -9,10 +9,11 @@
 		if (isset($_GET['eposta'])){
 			$erantzuna = $soapclient->call('egiaztatuE', array('x'=>$_GET['eposta']));
 			if($erantzuna=="BAI"){
-					echo '<font color="green"> Ikaslea WS ikasgaian matrikulatuta dago </font>';
+					echo 'BAI';
 			}
 			else{
-					echo '<font color="red"> Ikaslea ez dago WS ikasgaian matrikulatuta</font>';
+					echo 'EZ';
+					//echo "<script language='javascript'>alert(document.getElementById('bidali').disabled=true);</script>";
 			}
 		}
 ?>

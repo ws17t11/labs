@@ -207,7 +207,7 @@
 	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}"> <br/><br/>
 	            	Pasahitza errepikatu (*) : <input name="pasahitza2" id="pasahitza2" type="password" class="text" pattern=".{6,}"> <br/> <br/>
 	            	Zure argazkia : <input name="irudia" id="irudia" type="file" accept="image/*"> <br/> <br/>
-	            	<input type="submit" id="bidali" value="Bidali"> <input type="reset" id="garbitu" value="Garbitu">
+	            	<input type="submit" id="bidaliBtn" value="Bidali" disabled> <input type="reset" id="garbituBtn" value="Garbitu">
 				</form>
 
 				<div id="eposta_AJAX_response">
@@ -246,7 +246,16 @@
 
 				xhro_email_valid.onreadystatechange = function(){
 					if(xhro_email_valid.readyState==4 && xhro_email_valid.status==200){
-						document.getElementById("eposta_AJAX_response").innerHTML = xhro_email_valid.responseText;
+						//document.getElementById("eposta_AJAX_response").innerHTML = xhro_email_valid.responseText;
+						//alert(xhro_email_valid.responseText);
+						if(xhro_email_valid.responseText.trim()=="BAI"){
+								document.getElementById("eposta_AJAX_response").innerHTML = '<font color="green">Ikaslea WS ikasgaian matrikulatuta dago</font>';
+								document.getElementById("bidaliBtn").disabled=false;
+						}
+						else{
+								document.getElementById("eposta_AJAX_response").innerHTML = '<font color="red">Ikaslea ez dago WS ikasgaian matrikulatuta</font>';
+								document.getElementById("bidaliBtn").disabled=true;
+						}
 					}
 				}
 
@@ -307,7 +316,7 @@
 		      });
 
 		    //reset botoiari click egitean, irudi bat hautatu egin bada, ezabatu
-				$("#garbitu").click(function(){
+				$("#garbituBtn").click(function(){
 					//irudiren bat aukeraratu bada, ezabatu
 					if($("#reg_irudi").length){
 						$("#reg_irudi").remove(); //kendu irudia
