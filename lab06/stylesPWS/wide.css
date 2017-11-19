@@ -3,9 +3,20 @@ body				{background: #999;}
 #page-wrap:after 	{content: "Wide Layout";}
 
 nav					{float: left; width: 10%; height: 400px; margin-top:1px;}
+nav.large					{float: left; width: 10%; height: 800px; margin-top:1px;}
 nav span			{margin: 0px 100px 0px 0px;}
-section.main		{float: right; margin-right: 5px; width:89%; height: 400px; background-color: #d1b3ff;}
+section.main		{float: right; background-color: #d1b3ff; margin-right: 5px; height: 400px;  width:89%;}
+section.large		{float: right; background-color: #d1b3ff; margin-right: 5px; height: 800px;  width:89%;}
 section.half1		{float: left; width: 44.25%; height: 400px; margin-top:1px; margin-left: 0.5%; background-color: #d1b3ff;}
 section.half2		{float: right; width: 44.25%; height: 400px; margin-top:1px; margin-right: 0.5%; background-color: #F7E6F6;}
 footer				{clear: both; display: block;}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.clear { clear: both; }
+
 #logo				{text-align: right; margin-right: 40px; margin-top: -60px;}
