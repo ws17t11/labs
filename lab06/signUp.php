@@ -184,27 +184,26 @@
 
 				<form id="erregistroa" action="signUp.php" method="post" style="text-align:left;" enctype="multipart/form-data">
 
-								<?php
-									 if(isset($posta_repe) && $posta_repe==1){
-										 echo '<font color="red"> Eposta helbide hori hartuta dago </font> <br>';
-									 }
-								?>
-								Eposta (*) : <input name="eposta" id="eposta" type="email" class="text" size="40" required
-	                            pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
-	                            placeholder="jdoe123@ikasle.ehu.es"
-															onChange="balidatuEposta();"> <br/><br/>
-	            	Izen-deiturak (*) : <input name="deitura" id="deitura" type="text" class="text" size="40" required
-	            				placeholder="John Doe"  pattern="/^[A-Z][a-z]+(\s[A-Z][a-z]+|\s[a-zA-Z]+|\s[A-Za-z]+([-\'][A-Za-z]+)*)+$/"> <br/><br/>
+					<?php
+						 if(isset($posta_repe) && $posta_repe==1){
+							 echo '<font color="red"> Eposta helbide hori hartuta dago </font> <br>';
+						 }
+					?>
+					Eposta (*) : <input name="eposta" id="eposta" type="email" class="text" size="40" required
+                    pattern="[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)"
+                    placeholder="jdoe123@ikasle.ehu.es" onChange="balidatuEposta();"> <br/><br/>
+    				Izen-deiturak (*) : <input name="deitura" id="deitura" type="text" class="text" size="40" required
+    				placeholder="John Doe"  pattern="/^[A-Z][a-z]+(\s[A-Z][a-z]+|\s[a-zA-Z]+|\s[A-Za-z]+([-\'][A-Za-z]+)*)+$/"> <br/><br/>
 
 
-								<?php
- 							 		if(isset($nick_repe) && $nick_repe==1 ){
- 										echo '<font color="red"> Nick hori hartuta dago </font> <br>';
- 									}
- 							 ?>
+					<?php
+						if(isset($nick_repe) && $nick_repe==1 ){
+							echo '<font color="red"> Nick hori hartuta dago </font> <br>';
+						}
+					?>
 	            	Nick (*) : <input name="nick" id="nick" type="text" class="text" size="20" placeholder="Johnny"
 	            				required pattern="[A-Za-z0-9]+"> <br/> <br/>
-	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}"> <br/><br/>
+	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}" onChange="balidatuPasahitza();"> <br/><br/>
 	            	Pasahitza errepikatu (*) : <input name="pasahitza2" id="pasahitza2" type="password" class="text" pattern=".{6,}"> <br/> <br/>
 	            	Zure argazkia : <input name="irudia" id="irudia" type="file" accept="image/*"> <br/> <br/>
 	            	<input type="submit" id="bidaliBtn" value="Bidali" disabled> <input type="reset" id="garbituBtn" value="Garbitu">
@@ -259,15 +258,40 @@
 					}
 				}
 
+				/***********************
+				*** Bigarren Ariketa ***
+				************************/
+
+				xhro_pass_valid = new XMLHttpRequest();
+
+				function balidatuPasahitza() {
+					xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
+					xhro_pass_valid.send("");
+				}
+
+				xhro_pass_valid.onreadystatechange = function(){
+					if(xhro_pass_valid.readyState==4 && xhro_pass_valid.status==200){
+						alert(xhro_pass_valid.responseText.trim());
+						if(xhro_pass_valid.responseText.trim()=="BALIOGABEA"){
+							document.getElementById("password_AJAX_response").innerHTML = '<font color="red">Pasahitz hau ez dago onartua.</font>';
+							document.getElementById("bidaliBtn").disabled=true;
+						}
+						else {
+							document.getElementById("password_AJAX_response").innerHTML = '<font color="green">Pasahitz hau onartua dago.</font>';
+							document.getElementById("bidaliBtn").disabled=false;
+						}
+					}
+				}
+
 		    $(document).ready(function(){
 
 		        $("#erregistroa").submit(function(){
 		            //balidatu eposta
-								//return true;
-								if($('#pasahitza').val() !== $('#pasahitza2').val()){
-									alert("Pasahitzak ez dira berdinak!");
-									return false;
-								}
+					//return true;
+					if($('#pasahitza').val() !== $('#pasahitza2').val()){
+						alert("Pasahitzak ez dira berdinak!");
+						return false;
+					}
 		            return true;
 		        });
 

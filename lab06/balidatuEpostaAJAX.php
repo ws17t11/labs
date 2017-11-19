@@ -9,11 +9,11 @@
 		if (isset($_GET['eposta'])){
 			$erantzuna = $soapclient->call('egiaztatuE', array('x'=>$_GET['eposta']));
 			if($erantzuna=="BAI"){
-					echo 'BAI';
+				echo 'BAI';
 			}
 			else{
-					echo 'EZ';
-					//echo "<script language='javascript'>alert(document.getElementById('bidali').disabled=true);</script>";
+				echo 'EZ';
+				//echo "<script language='javascript'>alert(document.getElementById('bidali').disabled=true);</script>";
 			}
 		}
 ?>
