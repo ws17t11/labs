@@ -87,9 +87,19 @@
 
     <section class="half2" id="s2" style="text-align:left;">
      <div>
-       <input type="button" id="showBtn" value="Galderak ikusi" style="text-align:left;"><br><br>
+       <input type="button" id="showBtn" value="Galderak ikusi" style="text-align:left;">
+       <input type="button" id="showByIdBtn" value="Galderak ID bidez ikusi" style="text-align:left;"><br><br>
        <div id="showQuestionsResponse">
-        <!--Hemen agertuko dira XML-ko galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean-->
+        <!--Hemen agertuko dira XML-ko galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean -->
+       </div>
+       <div id="searchQuestionByIdResponse"  style="display: none;">
+          <form id='galderaById' name='galderaById' style='text-align:left;' enctype='multipart/form-data'>
+                  Galderaren ID: <input name='galderarenId' id='galderarenId' type='number' min='1' value='1'/>
+                  <input type='button' id='searchByIdBtn' value='Galdera bilatu'/><br>
+          </form> 
+          <div id='showQuestionByIdResponse'> 
+          </div>
+        <!--Hemen agertuko dira ID bidez bilatutako galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean -->
        </div>
        <br/> <br/>
        <div id="numberQuestions">
@@ -113,7 +123,7 @@
     $(document).ready(function(){
 
         /**************************
-        *** Lehenengo Hautazkoa ***
+        *** Lehenengo Hautazkoa *** LAB5
         ***************************/
 
         xhro_n_quest = new XMLHttpRequest();
@@ -137,7 +147,7 @@
         }
 
         /*************************
-        *** Bigarren Hautazkoa ***
+        *** Bigarren Hautazkoa *** LAB5
         **************************/
 
         xhro_n_user = new XMLHttpRequest();
@@ -171,7 +181,7 @@
             //galerak erakusteko botoia sakatzean. Beraz, dagoeneko galderak erakusteko
             //select-a baldin badago dokumentuan, automatikoki eguneratu. Hurrengo
             //baldintzarekin, taula-a dokumentuan dagoen ikusiko dugu
-            if($("#xmlQuestions").length){
+            if($("#xmlQuestions").length && $("#xmlQuestions").is(":visible")){
               xhro_show.open("GET", "showQuestionsAJAX.php", true);
               xhro_show.send("");
               $('#showQuestionsResponse').effect('shake');
@@ -186,6 +196,38 @@
              document.getElementById("showQuestionsResponse").innerHTML=xhro_show.responseText;
            }
          }
+
+
+       /******************
+       *** Hautazkoa 1 *** LAB6
+       *******************/
+
+       // Galderak id bidez bilatzeko formularioa ikuspegi ezarri
+       $("#showByIdBtn").click(function(){
+           $("#showQuestionsResponse").hide();
+           $("#searchQuestionByIdResponse").show();
+           $("#showQuestionByIdResponse").hide();
+       });
+
+       //AJAX kontroladorea sortu galderak eskatzeko
+       xhro_show_id = new XMLHttpRequest();
+       xhro_show_id.onreadystatechange = function(){
+          if(xhro_show_id.readyState==4 && xhro_show_id.status==200){
+            document.getElementById("showQuestionByIdResponse").innerHTML=xhro_show_id.responseText.trim();
+            $("#showQuestionByIdResponse").show();
+          }
+       }
+
+       //Galdera ikusteko ID bidez botoia sakatzean, AJAX eskaera egin
+       $("#searchByIdBtn").click(function(){
+           if ($.isNumeric($('#galderarenId').val())) {
+              xhro_show_id.open("GET", "getQuestionClient.php?id="+ $('#galderarenId').val(), true);
+              xhro_show_id.send("");
+           } else {
+              document.getElementById("showQuestionByIdResponse").innerHTML='<br/> <em> ID zenbaki bat izan behar da.</em>';
+              $("#showQuestionByIdResponse").show();
+           }
+       });
 
        //Galdera gehitzeko botoia sakatzean, formularioa balidatu eta AJAX eskaera egin
        $('#addBtn').click(function(){
@@ -228,12 +270,12 @@
 
        //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
        $('#showBtn').click(function(){
+           $("#showQuestionsResponse").show();
+           $("#searchQuestionByIdResponse").hide();
+           $("#showQuestionByIdResponse").hide();
            xhro_show.open("GET", "showQuestionsAJAX.php", true);
            xhro_show.send("");
        });
-
-
-
 
 
         //erabiltzaileak irudi bat aukeratzen duenean
@@ -289,7 +331,6 @@
     		});
 
   });
-
 </script>
 </body>
 </html>

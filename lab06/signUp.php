@@ -232,56 +232,56 @@
 
 		<script type="text/javascript">
 
-				/************************
-				*** Lehenengo Ariketa ***
-				*************************/
-				xhro_email_valid = new XMLHttpRequest();
+			/************************
+			*** Lehenengo Ariketa ***
+			*************************/
+			xhro_email_valid = new XMLHttpRequest();
 
-				//AJAX kontroladorea sortu galdera kopurua ikusteko
-				function balidatuEposta() {
-					xhro_email_valid.open("GET", "balidatuEpostaAJAX.php?eposta=" + $('#eposta').val(), true);
-					xhro_email_valid.send("");
-				}
+			//AJAX kontroladorea sortu galdera kopurua ikusteko
+			function balidatuEposta() {
+				xhro_email_valid.open("GET", "balidatuEpostaAJAX.php?eposta=" + $('#eposta').val(), true);
+				xhro_email_valid.send("");
+			}
 
-				xhro_email_valid.onreadystatechange = function(){
-					if(xhro_email_valid.readyState==4 && xhro_email_valid.status==200){
-						//document.getElementById("eposta_AJAX_response").innerHTML = xhro_email_valid.responseText;
-						//alert(xhro_email_valid.responseText);
-						if(xhro_email_valid.responseText.trim()=="BAI"){
-								document.getElementById("eposta_AJAX_response").innerHTML = '<font color="green">Ikaslea WS ikasgaian matrikulatuta dago</font>';
-								document.getElementById("bidaliBtn").disabled=false;
-						}
-						else{
-								document.getElementById("eposta_AJAX_response").innerHTML = '<font color="red">Ikaslea ez dago WS ikasgaian matrikulatuta</font>';
-								document.getElementById("bidaliBtn").disabled=true;
-						}
-					}
-				}
-
-				/***********************
-				*** Bigarren Ariketa ***
-				************************/
-
-				xhro_pass_valid = new XMLHttpRequest();
-
-				function balidatuPasahitza() {
-					xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
-					xhro_pass_valid.send("");
-				}
-
-				xhro_pass_valid.onreadystatechange = function(){
-					if(xhro_pass_valid.readyState==4 && xhro_pass_valid.status==200){
-						alert(xhro_pass_valid.responseText.trim());
-						if(xhro_pass_valid.responseText.trim()=="BALIOGABEA"){
-							document.getElementById("password_AJAX_response").innerHTML = '<font color="red">Pasahitz hau ez dago onartua.</font>';
-							document.getElementById("bidaliBtn").disabled=true;
-						}
-						else {
-							document.getElementById("password_AJAX_response").innerHTML = '<font color="green">Pasahitz hau onartua dago.</font>';
+			xhro_email_valid.onreadystatechange = function(){
+				if(xhro_email_valid.readyState==4 && xhro_email_valid.status==200){
+					//document.getElementById("eposta_AJAX_response").innerHTML = xhro_email_valid.responseText;
+					//alert(xhro_email_valid.responseText);
+					if(xhro_email_valid.responseText.trim()=="BAI"){
+							document.getElementById("eposta_AJAX_response").innerHTML = '<font color="green">Ikaslea WS ikasgaian matrikulatuta dago</font>';
 							document.getElementById("bidaliBtn").disabled=false;
-						}
+					}
+					else{
+							document.getElementById("eposta_AJAX_response").innerHTML = '<font color="red">Ikaslea ez dago WS ikasgaian matrikulatuta</font>';
+							document.getElementById("bidaliBtn").disabled=true;
 					}
 				}
+			}
+
+			/***********************
+			*** Bigarren Ariketa ***
+			************************/
+
+			xhro_pass_valid = new XMLHttpRequest();
+
+			function balidatuPasahitza() {
+				xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
+				xhro_pass_valid.send("");
+			}
+
+			xhro_pass_valid.onreadystatechange = function(){
+				if(xhro_pass_valid.readyState==4 && xhro_pass_valid.status==200){
+					//alert(xhro_pass_valid.responseText.trim());
+					if(xhro_pass_valid.responseText.trim()=="BALIOGABEA"){
+						document.getElementById("password_AJAX_response").innerHTML = '<font color="red">Pasahitz hau ez dago onartua.</font>';
+						document.getElementById("bidaliBtn").disabled=true;
+					}
+					else {
+						document.getElementById("password_AJAX_response").innerHTML = '<font color="green">Pasahitz hau onartua dago.</font>';
+						document.getElementById("bidaliBtn").disabled=false;
+					}
+				}
+			}
 
 		    $(document).ready(function(){
 
