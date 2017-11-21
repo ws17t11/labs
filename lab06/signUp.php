@@ -91,15 +91,8 @@
 					    }
 
 
-					  //Datu basearekin konexioa sortu
-						$local = 1;
-						if($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-						else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
-						//erroreren bat egon bada, mezu bat igorri
-						if(mysqli_connect_errno()){ //edo if(!link){
-							echo ("Errorea datu basearekin konexioa sortzean. Mesedez, saiatu berriz.");
-							exit();
-						}
+					    //Datu basearekin konexioa sortu
+						include 'connect.php';
 
 						//Ziurtatu datu basean ez daudela datu errepikaturik
 						$eposta_query = "SELECT * FROM users WHERE eposta= '" . $eposta . "'";
@@ -154,18 +147,18 @@
 
 						    if ($link->query($sql) === TRUE) {
 						   		//echo "<script type='text/javascript'>";
-									//header("Location:welcome.php?eposta=$eposta&image=$targetPath");
+								//header("Location:welcome.php?eposta=$eposta&image=$targetPath");
 
-									/*Counter kontagailua eguneratu*/
-		              $xml = simplexml_load_file('xml/counter.xml');
-		              if ($xml) {
-		                $xml->counter = $xml->counter + 1;
-		                $xml->asXML('xml/counter.xml');
-		              } else {
-		                echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
-		              }
-									echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
-									die();
+								/*Counter kontagailua eguneratu*/
+								$xml = simplexml_load_file('xml/counter.xml');
+								if ($xml) {
+									$xml->counter = $xml->counter + 1;
+									$xml->asXML('xml/counter.xml');
+								} else {
+									echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
+								}
+								echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
+								die();
 
 						    } else {
 										$error = 1;
@@ -265,8 +258,13 @@
 			xhro_pass_valid = new XMLHttpRequest();
 
 			function balidatuPasahitza() {
-				xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
-				xhro_pass_valid.send("");
+				if ($('#pasahitza').val().length != 0) {
+			        xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
+				    xhro_pass_valid.send("");   
+			    } else {
+			        document.getElementById("password_AJAX_response").innerHTML = '';
+					document.getElementById("bidaliBtn").disabled=true;
+			    }
 			}
 
 			xhro_pass_valid.onreadystatechange = function(){

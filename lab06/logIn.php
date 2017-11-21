@@ -67,14 +67,7 @@
             }
 
             //Datu basearekin konexioa sortu
-            $local = 1;
-            if($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-            else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
-            //erroreren bat egon bada, mezu bat igorri
-            if(mysqli_connect_errno()){ //edo if(!link){
-              echo ("Errorea datu basearekin konexioa sortzean. Mesedez, saiatu berriz.");
-              exit();
-            }
+            include 'connect.php';
 
             //datuak zuzenak direla ikusi
             $login_query = "SELECT * FROM users WHERE eposta= '" . $_POST["eposta"] . "' AND pasahitza = '" . $_POST["pass"] . "'";
@@ -99,7 +92,8 @@
 						} else {
                 echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
             }
-
+            mysqli_close($link);
+            
           }
           if(!isset($_POST["eposta"]) || $logeatuta===FALSE) {
 

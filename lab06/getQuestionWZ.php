@@ -28,21 +28,13 @@
 	
 	//funtzioa inplementatzen dugu 
 	function getQuestion($id) { 
-		$local = 1;
-
-    	$result['gal'] = "";
+		
+		$result['gal'] = "";
 		$result['ema'] = "";
 		$result['zai'] = 0;
 		$result['err'] = 1;
 
-		if($local==1) $link = mysqli_connect("localhost", "root", "", "quiz");
-		else $link = mysqli_connect("localhost", "id3302669_ws17t11", "", "id3302669_quiz"); //pasahitza ezkutu da
-
-	    //erroreren bat egon bada, mezu bat igorri
-	    if(mysqli_connect_errno()){ 
-			echo ("Errorea datu basearekin konexioa sortzean: " . mysqli_connect_error());
-			return $result;
-	    }
+		include 'connect.php';
 
 		$galdera = $link->query("SELECT * FROM questions WHERE id = $id LIMIT 1");
 
