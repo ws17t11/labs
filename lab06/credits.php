@@ -175,7 +175,7 @@
                   lng: longitudea
                 };
                 infoWindow.setPosition(pos);
-                infoWindow.setContent('Zure lokazioa');
+                infoWindow.setContent('Zerbitzariaren lokazioa');
                 map.setCenter(pos);
 
                 //Informazio taulan koordenatuak ezarri
