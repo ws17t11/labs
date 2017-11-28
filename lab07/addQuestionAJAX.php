@@ -37,7 +37,7 @@
       echo "Mesedez, saiatu berriz";
       exit();
     }
-    if(strlen($gaia)==0){
+    if(strlen($gaia)==0 || preg_match('/^[a-zA-Z0-9]+$/', $gaia) != 1) {
       echo "ERROREA! Galdera gutxienez 10 karaktere izan behar ditu<br>";
       echo "Mesedez, saiatu berriz";
       exit();

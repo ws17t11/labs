@@ -1,5 +1,7 @@
 <?php
   require('segurtasuna.php');
+  if ($_SESSION["mota"] != 1)
+    header("Location: layout.php");
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +47,6 @@
     </header>
   	<nav class='main' id='n1' role='navigation'>
       <?php
-  	    if (isset($_GET["eposta"])) {
           $email = trim($_GET["eposta"]);
           $image = trim($_GET["image"]);
           $urlparams = 'eposta=' . $email .'&image=' . $image;
@@ -57,8 +58,6 @@
           } else {
             echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
           }
-          echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">DB galderak ikusi</a></span>');
-	      }
 	    ?>
       <!--<span><a href="layout.html">Log out</a></span> -->
   	</nav>
