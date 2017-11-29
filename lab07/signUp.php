@@ -4,9 +4,6 @@
 		header("Location: logOut.php");
 		exit();
 	}
-	if (isset($_GET['eposta'])) { // sesioa ez badu hasita eta URLa nahita aldatzen badu, URLa aldatzen dugu
-		header("Location: signUp.php");
-		exit();
 }
 ?>
 
@@ -30,8 +27,8 @@
 		<div id='page-wrap'>
 
 		<header class='main' id='h1'>
-			  <span class="right"> <a href="logIn.php">LogIn</a> </span>
-			  <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
+			<span class="right"> <a href="logIn.php">LogIn</a> </span>
+			<span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 			<h2>Quiz: crazy questions</h2>
 		</header>
 

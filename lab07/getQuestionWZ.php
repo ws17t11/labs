@@ -5,7 +5,7 @@
 	require_once('lib/class.wsdlcache.php');
 
 	//name of the service 
-	$ns = "http://localhost/lab6/getQuestionWZ.php?wsdl";   
+	$ns = "http://localhost/lab7/getQuestionWZ.php?wsdl";   
 	$server = new soap_server; 
 	$server->configureWSDL('getQuestion',$ns); 
 	$server->wsdl->schemaTargetNamespace = $ns;

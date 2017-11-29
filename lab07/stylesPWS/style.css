@@ -45,6 +45,9 @@ nav span             	{margin: 0px 10px 0px 0px; width: 100%; display: inline-bl
 #addBtn					{margin-left: 44%;}
 #showBtn, #searchByIdBtn {margin-left: 33%;}
 
+/* Reviewing Quizzen botoia */
+#reviewAzaldu			{padding-top: 35px;}
+
 	table.mytable {
 	    border-collapse: collapse;
 	    width: 100%;

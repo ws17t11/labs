@@ -27,39 +27,25 @@
           <!-- Hemen agertuko da online dauden erabiltzaile kopurua -->
       </div>
       <?php
-          if (isset($_GET["eposta"])) {
-              echo '<h2>Quiz: crazy questions</h2><br/>';
-              echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
-              //kargatu irudia
-              echo '<div id="logo">';
-              if (isset($_GET["image"])) {
-                echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
-              }else{
-                echo '<img height="50" width="50" src="img/users/default.png"><br>';
-              }
-              echo '<a href="logOut.php">LogOut</a>';
-              echo '</div>';
-            } else {
-              echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
-              echo '<h2>Quiz: crazy questions</h2>';
-            }
-        ?>
+        echo '<h2>Quiz: crazy questions</h2><br/>';
+        echo 'Kaixo, ' . $_SESSION["eposta"] . '<br/>';
+        //kargatu irudia
+        echo '<div id="logo">';
+        if (isset($_SESSION["image"])) {
+          echo '<img height="50" width="50" src="img/users/' . $_SESSION["image"] . '"><br>';
+        }else{
+          echo '<img height="50" width="50" src="img/users/default.png"><br>';
+        }
+        echo '<a href="logOut.php">LogOut</a>';
+        echo '</div>';
+      ?>
     </header>
   	<nav class='main' id='n1' role='navigation'>
       <?php
-          $email = trim($_GET["eposta"]);
-          $image = trim($_GET["image"]);
-          $urlparams = 'eposta=' . $email .'&image=' . $image;
-          echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
-          echo('<span><a href="/quizzes">Quizzes</a></span>');
-          echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
-          if ($_SESSION["mota"] == 2) {
-            echo('<span><a href="reviewingQuizes.php?' . $urlparams . '">Galderak errebisatu</a></span>');
-          } else {
-            echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
-          }
+          echo('<span><a href="layout.php">Home</a></span>');
+          echo('<span><a href="credits.php">Credits</a></span>');
+          echo('<span><a href="handlingQuizes.php">Galderak kudeatu</a></span>');
 	    ?>
-      <!--<span><a href="layout.html">Log out</a></span> -->
   	</nav>
     <section class="half1" id="s1">
       <div>
@@ -132,13 +118,11 @@
         ***************************/
 
         xhro_n_quest = new XMLHttpRequest();
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var eposta = url.searchParams.get("eposta");
-
+        var eposta_glob = "<%= session.getAttribute(eposta) %>";
+        
         //AJAX kontroladorea sortu galdera kopurua ikusteko
         function eguneratuGalderaKop() {
-          xhro_n_quest.open("GET", "numberQuestions.php?eposta=" + eposta, true);
+          xhro_n_quest.open("GET", "numberQuestions.php?eposta=" + eposta_glob, true);
           xhro_n_quest.send("");
         }
 
@@ -263,7 +247,7 @@
            //lortu formularioaren parametro guztiak
            formData = new FormData(formElement);
            //gehitu epostaren parametroa automatikoki
-           formData.append("eposta", <?php echo '"' . $_GET["eposta"] . '"'?>);
+           formData.append("eposta", <?php echo '"' . $_SESSION["eposta"] . '"'?>);
              // Display the key/value pairs
              /*for (var pair of formData.entries()) {
                 alert(pair[0]+ ', ' + pair[1]);

@@ -23,36 +23,28 @@
 
 		<header class='main' id='h1'>
 			<?php
-		      if (isset($_GET["eposta"])) {
-		          echo '<h2>Quiz: crazy questions</h2><br/>';
-		          echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
-		          //kargatu irudia
-		          echo '<div id="logo">';
-		          if (isset($_GET["image"])) {
-		            echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
-		          }else{
-		            echo '<img height="50" width="50" src="img/users/default.png"><br>';
-		          }
-		          echo '<a href="logOut.php">LogOut</a>';
-		          echo '</div>';
-		        } else {
-		          echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
-		          echo '<h2>Quiz: crazy questions</h2>';
-		        }
+				echo '<h2>Quiz: crazy questions</h2><br/>';
+				echo 'Kaixo, ' . $_SESSION["eposta"] . '<br/>';
+				//kargatu irudia
+				echo '<div id="logo">';
+				if (isset($_SESSION["image"])) {
+					echo '<img height="50" width="50" src="img/users/' . $_SESSION["image"] . '"><br>';
+				}else{
+					echo '<img height="50" width="50" src="img/users/default.png"><br>';
+				}
+				echo '<a href="logOut.php">LogOut</a>';
+				echo '</div>';
 		    ?>
 		</header>
 
 		<nav class='main' id='n1' role='navigation'>
 			<?php
-				$email = trim($_GET["eposta"]);
-				$image = trim($_GET["image"]);
-				$urlparams = 'eposta=' . $email .'&image=' . $image;
-				echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
-				echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
+				echo('<span><a href="layout.php">Home</a></span>');
+				echo('<span><a href="credits.php">Credits</a></span>');
 				if ($_SESSION["mota"] == 2) {
-					echo('<span><a href="reviewingQuizes.php?' . $urlparams . '">Galderak errebisatu</a></span>');
+					echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');
 				} else {
-					echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
+					echo('<span><a href="handlingQuizes.php">Galderak kudeatu</a></span>');
 				}
 	    	?>
 		</nav>
@@ -61,9 +53,9 @@
 
 			<?php
 
-				if (isset($_GET["eposta"])) {
+				if (isset($_SESSION["eposta"])) {
 
-					$email = trim($_GET["eposta"]);
+					$email = trim($_SESSION["eposta"]);
 
 					//Datu basearekin konexioa sortu
                   	include 'connect.php';

@@ -11,6 +11,7 @@
 	unset($_SESSION["eposta"]); // badaezpada ere...
 	unset($_SESSION["mota"]);
 	unset($_SESSION["SID"]);
+	unset($_SESSION["image"]);
 	session_destroy();
 	// Main orrira joan
 	echo "<script>location.href='layout.php';</script>";

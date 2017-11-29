@@ -24,45 +24,28 @@
   <div id='page-wrap'>
 	<header class='main' id='h1'>
     <?php
-      if (isset($_GET["eposta"])) {
-          echo '<h2>Quiz: crazy questions</h2><br/>';
-          echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
-          //kargatu irudia
-          echo '<div id="logo">';
-          if (isset($_GET["image"])) {
-            echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
-          }else{
-            echo '<img height="50" width="50" src="img/users/default.png"><br>';
-          }
-          echo '<a href="logOut.php">LogOut</a>';
-          echo '</div>';
-        } else {
-          echo '<span class="right"> <a href="logIn.php">LogIn</a> </span>';
-          echo '<h2>Quiz: crazy questions</h2>';
-        }
+      echo '<h2>Quiz: crazy questions</h2><br/>';
+      echo 'Kaixo, ' . $_SESSION["eposta"] . '<br/>';
+      //kargatu irudia
+      echo '<div id="logo">';
+      if (isset($_SESSION["image"])) {
+        echo '<img height="50" width="50" src="img/users/' . $_SESSION["image"] . '"><br>';
+      }else{
+        echo '<img height="50" width="50" src="img/users/default.png"><br>';
+      }
+      echo '<a href="logOut.php">LogOut</a>';
+      echo '</div>';
     ?>
     </header>
 	<nav class='main' id='n1' role='navigation'>
     <?php
-      if (isset($_GET["eposta"])) {
-        
-        $email = trim($_GET["eposta"]);
-        $image = trim($_GET["image"]);
-        $urlparams = 'eposta=' . $email .'&image=' . $image;
-
-        echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
-				echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
-        if ($_SESSION["mota"] == 2) {
-          echo('<span><a href="reviewingQuizes.php?' . $urlparams . '">Galderak errebisatu</a></span>');
-        } else {
-          echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
-        }
-      } else {
         echo('<span><a href="layout.php">Home</a></span>');
-        echo('<span><a href="/quizzes">Quizzes</a></span>');
-        echo('<span><a href="credits.php">Credits</a></span>');
-        echo('<span><a href="signUp.php">Erregistratu</a></span>');
-      }
+				echo('<span><a href="credits.php">Credits</a></span>');
+        if ($_SESSION["mota"] == 2) {
+          echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');
+        } else {
+          echo('<span><a href="handlingQuizes.php">Galderak kudeatu</a></span>');
+        }
     ?>
 	</nav>
     <section class="half1" id="s1" style="text-align: left;">
@@ -74,9 +57,13 @@
           <input type="radio" name="ezaugarria" value=0 checked="checked" /> ID <br/>
           <input type="radio" name="ezaugarria" value=1 /> Zailtasuna <br/>
           <input type="radio" name="ezaugarria" value=2 /> Gaia <br/> <br/>
-          <input type="text" id="param"/> <input type="button" id="showSomeBtn" value="Erakutsi galderak" /> 
+          <div id="bilatuGaldera" style="margin-left: 30%; margin-top: -11%;">
+            <input type="text" id="param"/> 
+            <input type="button" id="showSomeBtn" value="Erakutsi galderak" /> 
+          </div>
         </form>
 
+        <br/><br/>
         <div id="galderenLista">
 
         </div>
@@ -87,10 +74,11 @@
 
     <section class="half2" id="s2" style="text-align: left;">
       <div id="galderaAldatzen" hidden>
-        <h3> Galdera eguneratzen </h3> <br/>
+        <h3> Galdera eguneratzen </h3>
+        <br/>
         <form action="" method="POST">
-          Aldatzen ari garen galderaren IDa: <input type="text" id="gal_ID" value="" readonly="readonly"/> <br/>
-          <input type="text" id="gal_erab" value="" readonly="readonly"/> erabiltzaileak igo du galdera. <br/> <br/>
+          Aldatzen ari garen galderaren IDa: <input type="text" id="gal_ID" value="" size="7" readonly="readonly"/> <br/>
+          <input type="text" id="gal_erab" value="" size="35" readonly="readonly"/> erabiltzaileak igo du galdera. <br/> <br/>
           Enuntziatua: <br/> <textarea name="galdera" id="gal_enun" rows="2" cols="40"> </textarea> <br/> <br/>
           Emaitza zuzena: <input type="text" id="gal_ema" value="" /> <br/>
           Emaitza okerra 1: <input type="text" id="gal_oker1" value="" /> <br/>
@@ -108,8 +96,7 @@
           <input type="button" name="saveBtn" value="Gorde" onclick="galderaEguneratu();"/>
         </form>
       </div>
-
-      <div id="erroreaGalderaAldatzen" hidden>
+      <div id="mezuaGalderaAldatzen">
 
       </div>
     </section>
@@ -129,7 +116,7 @@
   xhro_show_all = new XMLHttpRequest();
   xhro_show_all.onreadystatechange = function(){
     if (xhro_show_all.readyState==4 && xhro_show_all.status==200) {
-      document.getElementById("galderenLista").innerHTML=xhro_show_all.responseText;
+      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:" +xhro_show_all.responseText;
     }
   }
 
@@ -143,7 +130,7 @@
   xhro_show_some = new XMLHttpRequest();
   xhro_show_some.onreadystatechange = function(){
     if (xhro_show_some.readyState==4 && xhro_show_some.status==200) {
-      document.getElementById("galderenLista").innerHTML=xhro_show_some.responseText;
+      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:" + xhro_show_some.responseText;
     }
   }
 
@@ -170,7 +157,7 @@
         $('#gal_zail').val($('#galTaula').find("tr:eq(" + i + ") td:eq(5)").text());
         $('#gal_gaia').val($('#galTaula').find("tr:eq(" + i + ") td:eq(6)").text());
         $('#galderaAldatzen').show();
-        $('#erroreaGalderaAldatzen').hide();
+        $('#mezuaGalderaAldatzen').html("");
       } 
     }  
 
@@ -186,14 +173,13 @@
   xhro_save_ques.onreadystatechange = function(){
     if (xhro_save_ques.readyState==4 && xhro_save_ques.status==200) {
       $('#galderaAldatzen').hide();
-      document.getElementById("erroreaGalderaAldatzen").innerHTML=xhro_save_ques.responseText;
-      $('#erroreaGalderaAldatzen').show();
+      document.getElementById("mezuaGalderaAldatzen").innerHTML=xhro_save_ques.responseText;
     }
   }
 
   //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
   function galderaEguneratu() {
-    var params = "id=" + $("#gal_ID").val() + "&galdera=" + htmlentities($("#gal_enun").val()) + "&ema=" + $("#gal_ema").val() + "&oker1=" + $("#gal_oker1").val() + "&oker2=" + $("#gal_oker2").val() + "&oker3=" + $("#gal_oker3").val() + "&zail=" + $("#gal_zail").val()  + "&gaia=" + $("#gal_gaia").val();
+    var params = "id=" + $("#gal_ID").val() + "&galdera=" + $("#gal_enun").val() + "&ema=" + $("#gal_ema").val() + "&oker1=" + $("#gal_oker1").val() + "&oker2=" + $("#gal_oker2").val() + "&oker3=" + $("#gal_oker3").val() + "&zail=" + $("#gal_zail").val()  + "&gaia=" + $("#gal_gaia").val();
     xhro_save_ques.open("POST", "saveQuestionAJAX.php", true);
     xhro_save_ques.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhro_save_ques.send(params);

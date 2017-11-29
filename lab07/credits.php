@@ -1,7 +1,5 @@
 <?php 
-  if (isset($_GET["eposta"])) {
-    require("segurtasuna.php");
-  }
+  require("segurtasun_askea.php");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -23,13 +21,13 @@
   <div id='page-wrap'>
   	<header class='main' id='h1'>
       <?php
-      if (isset($_GET["eposta"])) {
+      if (isset($_SESSION["eposta"])) {
           echo '<h2>Quiz: crazy questions</h2><br/>';
-          echo 'Kaixo, ' . $_GET["eposta"] . '<br/>';
+          echo 'Kaixo, ' . $_SESSION["eposta"] . '<br/>';
           //kargatu irudia
           echo '<div id="logo">';
-          if (isset($_GET["image"])) {
-            echo '<img height="50" width="50" src="img/users/' . $_GET["image"] . '"><br>';
+          if (isset($_SESSION["image"])) {
+            echo '<img height="50" width="50" src="img/users/' . $_SESSION["image"] . '"><br>';
           }else{
             echo '<img height="50" width="50" src="img/users/default.png"><br>';
           }
@@ -43,19 +41,14 @@
       </header>
   	<nav class='large' id='n1' role='navigation'>
       <?php
-      if (isset($_GET["eposta"])) {
-        $email = trim($_GET["eposta"]);
-        $image = trim($_GET["image"]);
-        $urlparams = 'eposta=' . $email .'&image=' . $image;
-
-        echo('<span><a href="layout.php?' . $urlparams . '">Home</a></span>');
-				echo('<span><a href="credits.php?' . $urlparams . '">Credits</a></span>');
+      if (isset($_SESSION["eposta"])) {
+        echo('<span><a href="layout.php">Home</a></span>');
+				echo('<span><a href="credits.php">Credits</a></span>');
 				if ($_SESSION["mota"] == 2) { // irakaslea
-          echo('<span><a href="reviewingQuizes.php?' . $urlparams . '">Galderak errebisatu</a></span>');
+          echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');
         } else {
-          echo('<span><a href="handlingQuizes.php?' . $urlparams . '">Galderak kudeatu</a></span>');
+          echo('<span><a href="handlingQuizes.php">Galderak kudeatu</a></span>');
         } 
-        echo('<span><a href="showQuestionsWithImages.php?' . $urlparams . '">DB galderak ikusi</a></span>');
       } else {
         echo('<span><a href="layout.php">Home</a></span>');
         echo('<span><a href="/quizzes">Quizzes</a></span>');

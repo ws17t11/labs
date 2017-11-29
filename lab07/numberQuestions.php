@@ -1,11 +1,11 @@
 <?php
 	$xml = simplexml_load_file('xml/questions.xml');
-	if ($xml && isset($_GET['eposta'])) {
+	if ($xml && isset($_SESSION['eposta'])) {
 		$n = 0;
     	$erab = 0;
 		foreach ($xml->assessmentItem as $question){
 			$n = $n + 1;
-			if ($question['author'] == $_GET['eposta']) {
+			if ($question['author'] == $_SESSION['eposta']) {
 				$erab = $erab + 1;
 			}
 		}

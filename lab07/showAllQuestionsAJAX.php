@@ -5,7 +5,7 @@
 	$taula = $link->query("SELECT * FROM questions");
 	$n = mysqli_num_rows($taula);
 
-	echo('<table class="mytable" style="  display: block; max-height: 200px; overflow-y: scroll;" id="galTaula">
+	echo('<table class="mytable" style="  display: block; max-height: 180px; overflow-y: scroll;" id="galTaula">
         <tr>
 			<th>Id</th>
 			<th>Eposta</th>

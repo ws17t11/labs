@@ -4,10 +4,6 @@
     header("Location: logOut.php");
     exit();
   }
-  if (isset($_GET['eposta'])) { // sesioa ez badu hasita eta URLa nahita aldatzen badu, URLa aldatzen dugu
-    header("Location: logIn.php");
-    exit();
-  }
 ?>
 
 <!DOCTYPE html>
@@ -147,6 +143,7 @@
               }
               $_SESSION['SID'] = session_id();
               $_SESSION['eposta'] = $eposta;
+              $_SESSION['image'] = $image;
               // SESIOEN TRATAMENDUA AMAITUA
 
               //HAUTAZKOA 3 -- Saiakera kopurua eguneratu maximora jarriz (3)
@@ -154,7 +151,7 @@
               $link->query("INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)");
 
 
-              echo "<script>location.href='welcome.php?eposta=$eposta&image=$image';</script>";
+              echo "<script>location.href='welcome.php';</script>";
               die();
           }
 			}
