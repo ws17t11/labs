@@ -105,7 +105,7 @@
           </select> <br/>
           Gaia: <input id="gal_gaia" value="" /> <br/> <br/>
           <input type="button" name="cancelBtn" value="Deuseztatu" onclick="deuseztatu();"/>
-          <input type="button" name="saveBtn" value="Gorde" />
+          <input type="button" name="saveBtn" value="Gorde" onclick="galderaEguneratu();"/>
         </form>
       </div>
 
@@ -154,39 +154,49 @@
   });
 
 
-  //AJAX kontroladorea sortu galderak ikusteko
-  xhro_load_ques = new XMLHttpRequest();
-  xhro_load_ques.onreadystatechange = function(){
-    if (xhro_load_ques.readyState==4 && xhro_load_ques.status==200) {
-      if (xhro_load_ques.responseText.length != 0) {
-        var val_array = xhro_load_ques.responseText.split(',');
-        $('#gal_ID').val(val_array[0]);
-        $('#gal_erab').val(val_array[1]);
-        $('#gal_enun').val(val_array[2]);
-        $('#gal_ema').val(val_array[3]);
-        $('#gal_oker1').val(val_array[4]);
-        $('#gal_oker2').val(val_array[5]);
-        $('#gal_oker3').val(val_array[6]);
-        $('#gal_zail').val(val_array[7]);
-        $('#gal_gaia').val(val_array[8]);
-        $('#galderaAldatzen').show();
-        $('#erroreaGalderaAldatzen').hide();
-      } else {
-        document.getElementById("erroreaGalderaAldatzen").innerHTML='<p>Errorea galdera eskuratzean, saiatu berriz mesedez.</p>';
-        $('#galderaAldatzen').hide();
-        $('#erroreaGalderaAldatzen').show();
-      }
-    }
-  }
-
   // Galdera bat aldatu nahi denean exekutatuko da
   function aldatuGaldera(id) {
-    xhro_load_ques.open("GET", "loadQuestionAJAX.php?id=" + id, true);
-    xhro_load_ques.send("");
+
+    for (i = 0; i < $('#galTaula tr').length; i++) {
+      if (parseInt($('#galTaula').find("tr:eq(" + i + ") td:eq(0)").text()) == id) {
+        $('#gal_ID').val($('#galTaula').find("tr:eq(" + i + ") td:eq(0)").text());
+        $('#gal_erab').val($('#galTaula').find("tr:eq(" + i + ") td:eq(1)").text());
+        $('#gal_enun').val($('#galTaula').find("tr:eq(" + i + ") td:eq(2)").text());
+        $('#gal_ema').val($('#galTaula').find("tr:eq(" + i + ") td:eq(3)").text());
+        var okerrak = $('#galTaula').find("tr:eq(" + i + ") td:eq(4)").html().split('<br>');
+        $('#gal_oker1').val(okerrak[0]);
+        $('#gal_oker2').val(okerrak[1]);
+        $('#gal_oker3').val(okerrak[2]);
+        $('#gal_zail').val($('#galTaula').find("tr:eq(" + i + ") td:eq(5)").text());
+        $('#gal_gaia').val($('#galTaula').find("tr:eq(" + i + ") td:eq(6)").text());
+        $('#galderaAldatzen').show();
+        $('#erroreaGalderaAldatzen').hide();
+      } 
+    }  
+
   }
+
 
   function deuseztatu() {
      $('#galderaAldatzen').hide();
+  }
+
+  //AJAX kontroladorea sortu galdera eguneratzeko
+  xhro_save_ques = new XMLHttpRequest();
+  xhro_save_ques.onreadystatechange = function(){
+    if (xhro_save_ques.readyState==4 && xhro_save_ques.status==200) {
+      $('#galderaAldatzen').hide();
+      document.getElementById("erroreaGalderaAldatzen").innerHTML=xhro_save_ques.responseText;
+      $('#erroreaGalderaAldatzen').show();
+    }
+  }
+
+  //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
+  function galderaEguneratu() {
+    var params = "id=" + $("#gal_ID").val() + "&galdera=" + htmlentities($("#gal_enun").val()) + "&ema=" + $("#gal_ema").val() + "&oker1=" + $("#gal_oker1").val() + "&oker2=" + $("#gal_oker2").val() + "&oker3=" + $("#gal_oker3").val() + "&zail=" + $("#gal_zail").val()  + "&gaia=" + $("#gal_gaia").val();
+    xhro_save_ques.open("POST", "saveQuestionAJAX.php", true);
+    xhro_save_ques.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhro_save_ques.send(params);
   }
 
 </script>

@@ -5,7 +5,7 @@
 	$taula = $link->query("SELECT * FROM questions");
 	$n = mysqli_num_rows($taula);
 
-	echo('<table class="mytable" style="  display: block; height: 200px; overflow-y: scroll;">
+	echo('<table class="mytable" style="  display: block; max-height: 200px; overflow-y: scroll;" id="galTaula">
         <tr>
 			<th>Id</th>
 			<th>Eposta</th>
@@ -16,8 +16,10 @@
 			<th>Gaia</th>
         </tr>');
 	while($row = $taula->fetch_assoc()){
-		echo("<tr>
-			<td> <input type='button' id='gal$row[id]' value='$row[id]' onclick='aldatuGaldera($row[id])'/> </td>
+		echo(//"<tr>
+			//<td> <input type='button' id='gal$row[id]' value='$row[id]' onclick='aldatuGaldera($row[id])'/> </td>
+			"<tr id='galdera$row[id]' onclick='aldatuGaldera($row[id])' onmouseover='' style='cursor: pointer;'>
+			<td>$row[id]</td>
 			<td>$row[eposta]</td>
 			<td>$row[galdera]</td>
 			<td>$row[zuzena]</td>
