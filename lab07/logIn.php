@@ -1,12 +1,12 @@
 ﻿<?php
   session_start();
   if (isset($_SESSION['eposta'])) { // sesioa hasita badu eta berriz logeatzen saiatzen bada, saioa ixten dugu (por list@)
-    header("Location: logOut.php");  
-    exit(); 
+    header("Location: logOut.php");
+    exit();
   }
   if (isset($_GET['eposta'])) { // sesioa ez badu hasita eta URLa nahita aldatzen badu, URLa aldatzen dugu
-    header("Location: logIn.php");  
-    exit(); 
+    header("Location: logIn.php");
+    exit();
   }
 ?>
 
@@ -41,9 +41,9 @@
         echo('<span><a href="signUp.php">Erregistratu</a></span>');
     ?>
 	</nav>
-    <section class="main" id="s1">
+  <section class="main" id="s1">
+    <div>
 
-    	<div>
     <?php
 		//Erabiltzailea logeatzen saiatu bada
 		$logeatuta = FALSE;
@@ -51,57 +51,118 @@
 		$passFormatuEgokia = TRUE;
 
 		if(isset($_POST["eposta"])){
-	        //Formularioko datuak eskuratu
-            $eposta = trim($_POST["eposta"]);
-            $pass = trim($_POST["pass"]);
+      //Formularioko datuak eskuratu
+      $eposta = trim($_POST["eposta"]);
+      $pass = trim($_POST["pass"]);
 
-            //Formularioaren datuak balidatu
-            if(preg_match('/^[a-zA-Z]+[0-9]{3}@(ikasle\.)?ehu\.(es|eus)$/' , $eposta)!=1){
-                $postaFormatuEgokia = FALSE;
-            }
-            if(strlen($pass)==0){
-                $passFormatuEgokia = FALSE;
-            }
+      //Formularioaren datuak balidatu
+      if(preg_match('/^[a-zA-Z]+[0-9]{3}@(ikasle\.)?ehu\.(es|eus)$/' , $eposta)!=1){
+          $postaFormatuEgokia = FALSE;
+      }
+      if(strlen($pass)==0){
+          $passFormatuEgokia = FALSE;
+      }
 
-            //Datu basearekin konexioa sortu
-            include 'connect.php';
+      //Datu basearekin konexioa sortu
+      include 'connect.php';
 
-            //datuak zuzenak direla ikusi
-            $login_query = "SELECT * FROM users WHERE eposta= '" . $_POST["eposta"] . "' AND pasahitza = '" . $_POST["pass"] . "'";
+
+      //datuak zuzenak direla ikusi
+      $login_query = "SELECT * FROM users WHERE eposta= '" . $_POST["eposta"] .  "'";
 			$login_result = $link->query($login_query);
 			$nrows = mysqli_num_rows($login_result);
 			if($nrows==1){
-				//echo 'Kaixo, '. $_POST["eposta"] . '!!!<br><br>';
-				$logeatuta = TRUE;
-				$new_user = $login_result->fetch_assoc();
-				$email = $new_user[eposta];
-				$image = $new_user[irudia];
-				/*Counter kontagailua eguneratu*/
-				$xml = simplexml_load_file('xml/counter.xml');
-				if ($xml) {
-					$xml->counter = $xml->counter + 1;
-					$xml->asXML('xml/counter.xml');
-				} else {
-					echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
-				}
 
-				// SESIOEN TRATAMENDUA
-				ini_set('session.cookie_lifetime',60);
-				$_SESSION['mota'] = 1; // 1: ikaslea
-				if(preg_match('/^web000@ehu\.es$/' , $eposta)==1) {
-					$_SESSION['mota'] = 2; // 2: irakaslea
-				}
-				$_SESSION['SID'] = session_id();
-				$_SESSION['eposta'] = $eposta;
-				// SESIOEN TRATAMENDUA AMAITUA
+          //HAUTAZKOA 3 -- saiakera kopuru maximoa gainditu ez duela ziurtatu
+          $saiakerak_query = "SELECT * FROM saiakerak WHERE eposta= '" . $_POST["eposta"] .  "'";
+          $saiakerak_result = $link->query($saiakerak_query);
+          $saiakerak_info = $saiakerak_result->fetch_assoc();
+          $aukerak = $saiakerak_info['aukerak']; //aukera posibleen kopurua lortu
 
-				echo "<script>location.href='welcome.php?eposta=$eposta&image=$image';</script>";
-				die();
-			} else {
-                echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
-            }
-            mysqli_close($link);
-            
+          if($aukerak==0){
+
+              //uneko denbora lortu
+              $today = new \Datetime();
+              //azken saiakeraren data lortu
+              $row_date = date_create_from_format('Y-m-d H:i:s', $saiakerak_info['azkendata']);
+              //azken saiakeartik pasa den denbora kalkulatu
+              $diff = $row_date->diff($today);
+
+              $minutu_dif = $diff->i; //denbora diferentzia, minututan
+              $itxarote_minutuak = 5; //itxaron behar den denbora desblokeatu arte
+
+              //echo $minutu_dif;
+
+              //itxarote denbora pasa bada, desbkoleatu
+              if ($minutu_dif>=$itxarote_minutuak){
+                  //Saiakera kopurua eguneratu maximora jarriz (3)
+                  $link->query("DELETE FROM saiakerak WHERE eposta= '" . $_POST["eposta"] .  "'");
+                  $link->query("INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)");
+                  $aukerak = 3;
+              }
+              else {
+                  echo '<font color="red"> ' .$_POST["eposta"]. ' kontua blokeatuta dago: saiakera kopuru maximoa gaindituta </font><br><br>';
+                  exit();
+              }
+
+          }
+
+  				//echo 'Kaixo, '. $_POST["eposta"] . '!!!<br><br>';
+  				$new_user = $login_result->fetch_assoc();
+
+          //pasahitza zuzena ez bada
+          if(!password_verify($_POST["pass"], $new_user['pasahitza'])){
+              echo '<font color="red"> Eposta edo pasahitza okerrak </font><br><br>';
+
+              //HAUTAZKOA 3 -- Jaitsi aukera kopuru posibleak
+              $aukerak = $aukerak-1;
+              $link->query("DELETE FROM saiakerak WHERE eposta= '" . $_POST["eposta"] .  "'");
+              $link->query("INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', $aukerak)");
+
+              if($aukerak==0){
+                  echo '<font color="red"> ' . $_POST["eposta"] . ' kontua blokeatu egin da </font><br><br>';
+              }
+              else{
+                  echo '<font color="red"> Aukera posibleak:' . $aukerak . ' </font><br><br>';
+              }
+          }
+          else{
+              $logeatuta = TRUE;
+              $email = $new_user[eposta];
+              $image = $new_user[irudia];
+              /*Counter kontagailua eguneratu*/
+              $xml = simplexml_load_file('xml/counter.xml');
+              if ($xml) {
+                $xml->counter = $xml->counter + 1;
+                $xml->asXML('xml/counter.xml');
+              } else {
+                echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
+              }
+
+              // SESIOEN TRATAMENDUA
+              ini_set('session.cookie_lifetime',60);
+              $_SESSION['mota'] = 1; // 1: ikaslea
+              if(preg_match('/^web000@ehu\.es$/' , $eposta)==1) {
+                $_SESSION['mota'] = 2; // 2: irakaslea
+              }
+              $_SESSION['SID'] = session_id();
+              $_SESSION['eposta'] = $eposta;
+              // SESIOEN TRATAMENDUA AMAITUA
+
+              //HAUTAZKOA 3 -- Saiakera kopurua eguneratu maximora jarriz (3)
+              $link->query("DELETE FROM saiakerak WHERE eposta= '" . $_POST["eposta"] .  "'");
+              $link->query("INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)");
+
+
+              echo "<script>location.href='welcome.php?eposta=$eposta&image=$image';</script>";
+              die();
+          }
+			}
+      else {
+          echo '<font color="red"> Ez dago eposta hori duen erabiltzailerik </font><br><br>';
+      }
+      mysqli_close($link);
+
 		}
 		if(!isset($_POST["eposta"]) || $logeatuta===FALSE) {
 

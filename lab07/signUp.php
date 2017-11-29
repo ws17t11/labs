@@ -1,12 +1,12 @@
 <?php
 	session_start();
 	if (isset($_SESSION['eposta'])) { // sesioa hasita badu eta erregistratzen saiatzen bada, saioa ixten dugu (por list@)
-		header("Location: logOut.php");  
-		exit(); 
+		header("Location: logOut.php");
+		exit();
 	}
 	if (isset($_GET['eposta'])) { // sesioa ez badu hasita eta URLa nahita aldatzen badu, URLa aldatzen dugu
-		header("Location: signUp.php");  
-		exit(); 
+		header("Location: signUp.php");
+		exit();
 }
 ?>
 
@@ -138,25 +138,28 @@
 
 						//sartu balioak users taulan, errorerik ez badaude
 						if($error==0){
+								$pasahitza_zifratuta = password_hash($pass, PASSWORD_DEFAULT);
 						    $sql = "INSERT INTO users (eposta, izena, nick, pasahitza, irudia)
-						    				VALUES ('$eposta', '$izena', '$nick', '$pass', '$targetPath')";
+						    				VALUES ('$eposta', '$izena', '$nick', '$pasahitza_zifratuta', '$targetPath')";
 
-						    if ($link->query($sql) === TRUE) {
-						   		//echo "<script type='text/javascript'>";
-								//header("Location:welcome.php?eposta=$eposta&image=$targetPath");
+								//saiakera kopurua adierazten duen taulan sartu ere
+								$sql2 = "INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)";
 
-								/*Counter kontagailua eguneratu*/
-								$xml = simplexml_load_file('xml/counter.xml');
-								if ($xml) {
-									$xml->counter = $xml->counter + 1;
-									$xml->asXML('xml/counter.xml');
-								} else {
-									echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
-								}
-								echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
-								die();
+						    if ($link->query($sql) === TRUE && $link->query($sql2) === TRUE) {
 
-						    } else {
+										/*Counter kontagailua eguneratu*/
+										$xml = simplexml_load_file('xml/counter.xml');
+										if ($xml) {
+											$xml->counter = $xml->counter + 1;
+											$xml->asXML('xml/counter.xml');
+										} else {
+											echo "<p> Ezin izan da XML fitxategia ireki online erabiltzaile kopurua gehitzeko.</p>";
+										}
+										echo "<script>location.href='welcome.php?eposta=$eposta&image=$targetPath';</script>";
+										die();
+
+						    }
+								else {
 										$error = 1;
 						        echo '<font color="red">Errorea datuak sartzean, mesedez, saiatu berriz</font><br/>';
 						    }
@@ -256,7 +259,7 @@
 			function balidatuPasahitza() {
 				if ($('#pasahitza').val().length != 0) {
 			        xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#pasahitza').val(), true);
-				    xhro_pass_valid.send("");   
+				    xhro_pass_valid.send("");
 			    } else {
 			        document.getElementById("password_AJAX_response").innerHTML = '';
 					document.getElementById("bidaliBtn").disabled=true;
