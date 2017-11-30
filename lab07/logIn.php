@@ -174,7 +174,7 @@
               ?>
               Eposta: <input name="eposta" id="eposta" type="email" size="40" required
                               pattern="[a-zA-Z]+[0-9]{3}@(ikasle\.)?ehu\.(es|eus)"
-                              title="placeholder="asalanueva123@ikasle.ehu.es"><br/><br/>
+                              title="Eposta" placeholder="asalanueva123@ikasle.ehu.es"><br/><br/>
 
               <?php
                   if($passFormatuEgokia==FALSE){
@@ -182,13 +182,14 @@
                   }
               ?>
               Pasahitza: <input name="pass" id="pass" type="password" pattern=".{1,}" required><br/>
-              <input type="submit" value="Saioa hasi">
+              <input type="submit" value="Saioa hasi"> <a href="pasahitzaAldatu.php" class="button">Pasahitza ahaztu zait</a>
             </form>
       <?php
           }
       ?>
 
     	</div>
+
 
     </section>
 	<footer class='main' id='f1'>

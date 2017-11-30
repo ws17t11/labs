@@ -1,0 +1,13 @@
+Vadillo
+-------
+
+- Encriptar las contraseñas del change password
+- Cambiar el signup para que meta galdera y erantzuna (con las respuestas encriptadas)
+- documentacion de los hautazkos
+
+Salaberria
+----------
+
+- Poner los layouts bonitos
+- Revisar Javascript para el reviewing quizes y pasahitzaaldatu.php
+- Reviewing quizes apañar para que guarde bien los caracteres especiales
