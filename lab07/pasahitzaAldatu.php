@@ -33,9 +33,10 @@
     include 'connect.php';
 
     //ALDATU PASAHITZA!!!!
-    $login_query = "UPDATE users SET pasahitza='$newpass1' WHERE eposta='$eposta'";
+    $pasahitza_zifratuta = password_hash($newpass1, PASSWORD_DEFAULT);
+    $login_query = "UPDATE users SET pasahitza='$pasahitza_zifratuta' WHERE eposta='$eposta'";
     if($link->query($login_query)){
-        header("Location: logIn.php");
+        echo "<script>location.href='logIn.php';</script>";
     }
     else{
       echo "Errorea datu basea atzitzean. Mesedez, saiatu berriz";
@@ -44,7 +45,7 @@
   }
   else{
       if (isset($_SESSION['eposta'])) { // sesioa hasita badu eta pasahitzaz ez bada go, saioa ixten dugu (por list@)
-        header("Location: logOut.php");
+        echo "<script>location.href='logOut.php';</script>";
         exit();
       }
   }
@@ -126,6 +127,37 @@
     function getSecurityQuestion() {
       xhro.open("GET", "getSecurityQuestion.php?eposta=" + $('#eposta').val(), true);
       xhro.send("");
+    }
+
+
+    /*************************
+    *** Pasahitza balidatu ***
+    **************************/
+
+    xhro_pass_valid = new XMLHttpRequest();
+
+    function balidatuPasahitza() {
+      if ($('#pasahitza').val().length != 0) {
+            xhro_pass_valid.open("GET", "balidatuPasahitzaAJAX.php?pass=" + $('#newpass1').val(), true);
+          xhro_pass_valid.send("");
+        } else {
+            document.getElementById("password_AJAX_response").innerHTML = '';
+        document.getElementById("bidaliBtn").disabled=true;
+        }
+    }
+
+    xhro_pass_valid.onreadystatechange = function(){
+      if(xhro_pass_valid.readyState==4 && xhro_pass_valid.status==200){
+        //alert(xhro_pass_valid.responseText.trim());
+        if(xhro_pass_valid.responseText.trim()=="BALIOGABEA"){
+          document.getElementById("password_AJAX_response").innerHTML = '<font color="red">Pasahitz hau ez dago onartua.</font>';
+          document.getElementById("submitBtn").disabled=true;
+        }
+        else {
+          document.getElementById("password_AJAX_response").innerHTML = '<font color="green">Pasahitz hau onartua dago.</font>';
+          document.getElementById("submitBtn").disabled=false;
+        }
+      }
     }
 
 

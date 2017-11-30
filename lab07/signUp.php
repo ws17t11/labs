@@ -4,7 +4,6 @@
 		header("Location: logOut.php");
 		exit();
 	}
-}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +31,7 @@
 			<h2>Quiz: crazy questions</h2>
 		</header>
 
-		<nav class='main' id='n1' role='navigation'>
+		<nav class='main' id='n1' role='navigation' style="height:500px">
 			<?php
 				echo('<span><a href="layout.php">Home</a></span>');
 				echo('<span><a href="/quizzes">Quizzes</a></span>');
@@ -40,7 +39,7 @@
 	    	?>
 		</nav>
 
-		<section class='main' id='s1' style="text-align: left;">
+		<section class='main' id='s1' style="text-align: left; height:500px">
 
 			<div>
 				<h3> Signing Up - Erregistroa</h3> <br/>
@@ -55,6 +54,8 @@
 					    $nick = trim($_POST["nick"]);
 					    $pass = trim($_POST["pasahitza"]);
 					    $pass2 = trim($_POST["pasahitza2"]);
+							$galdera = trim($_POST["galdera"]);
+							$erantzuna = trim($_POST["erantzuna"]);
 					    //Formularioaren datuak balidatu
 					    if(preg_match('/^[a-zA-Z]+[0-9]{3}@ikasle\.ehu\.(es|eus)$/' , $eposta)!=1){
 								echo "ERROREA! Epostak ez du formatu egokia!<br>" ;
@@ -82,6 +83,18 @@
 								//echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
 								exit();
 					    }
+
+							if(strlen($galdera) < 6){
+								echo "ERROREA! Idatzitako segurtasun galdera motzegia da<br>";
+								//echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								exit();
+							}
+
+							if(strlen($erantzuna) < 1){
+								echo "ERROREA! Segurtasun galderaren erantzuna adierazi behar da<br>";
+								//echo "Mesedez, saiatu berriz hurrengo esteka erabiliz: <a href=" . '"signUp.php"' . ">Erregistroa</a>";
+								exit();
+							}
 
 
 					    //Datu basearekin konexioa sortu
@@ -142,6 +155,9 @@
 								//saiakera kopurua adierazten duen taulan sartu ere
 								$sql2 = "INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)";
 
+								//saiakera kopurua adierazten duen taulan sartu ere
+								$sql3 = "INSERT INTO securityquestion (eposta, galdera, erantzuna) VALUES ('$eposta', 3)";
+
 						    if ($link->query($sql) === TRUE && $link->query($sql2) === TRUE) {
 
 										/*Counter kontagailua eguneratu*/
@@ -194,6 +210,10 @@
 	            				required pattern="[A-Za-z0-9]+"> <br/> <br/>
 	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}" onChange="balidatuPasahitza();"> <br/><br/>
 	            	Pasahitza errepikatu (*) : <input name="pasahitza2" id="pasahitza2" type="password" class="text" pattern=".{6,}"> <br/> <br/>
+								Segurtasun galdera (pasahitza ahaztuz gero, galdera hau egingo zaizu errekuperatzeko *)<br>
+								<textarea name="galdera" id="galdera" rows="2" cols="40" placeholder="Zein da lehendabizi suspenditu zidan unibertsitateko irakaslearen abizena">
+								</textarea><br><br>
+								Segurtasun galderaren erantzuna (*) : <input name="erantzuna" id="erantzuna" type="text" class="text" pattern=".{1,}" placeholder="Lerdorf"> <br/> <br/>
 	            	Zure argazkia : <input name="irudia" id="irudia" type="file" accept="image/*"> <br/> <br/>
 	            	<input type="submit" id="bidaliBtn" value="Bidali" disabled> <input type="reset" id="garbituBtn" value="Garbitu">
 				</form>
