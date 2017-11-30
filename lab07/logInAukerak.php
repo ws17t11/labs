@@ -1,11 +1,13 @@
 ﻿<?php
   session_start();
   if (isset($_SESSION['eposta'])) { // sesioa hasita badu eta berriz logeatzen saiatzen bada, saioa ixten dugu (por list@)
-    header("Location: logOut.php");
+    //header("Location: logOut.php");
+    echo "<script>location.href='logOut.php';</script>";
     exit();
   }
   if (isset($_GET['eposta'])) { // sesioa ez badu hasita eta URLa nahita aldatzen badu, URLa aldatzen dugu
-    header("Location: logIn.php");
+    //header("Location: logIn.php");
+    echo "<script>location.href='logIn.php';</script>";
     exit();
   }
 ?>

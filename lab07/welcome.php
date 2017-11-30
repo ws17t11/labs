@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require('segurtasuna.php');
 ?>
 
@@ -68,7 +69,7 @@
 					if ($nrows == 1) {
 						$user = $welcome_result->fetch_assoc();
                         $nick = $user['nick'];
-            
+
                         echo "<h3> Ongi Etorri! </h3> <br/>";
 						echo "Kaixo $nick! Ongi etorri gure Quiz: crazy questions orrira! <br/> <br/>";
 						echo "<p> Orain aukera duzu gure datubasera galderak igotzeko eta hauek ikusteko. </p>";

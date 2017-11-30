@@ -1,6 +1,4 @@
 <?php
-
-  //Pasahitza aldatzeko formularioa prozesatu
   session_start();
 
   if(isset($_POST['erantzuna'])){

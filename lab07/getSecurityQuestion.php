@@ -1,5 +1,6 @@
 <?php
 
+  session_start();
   $eposta = $_GET['eposta'];
 
   //Formularioaren datuak balidatu
@@ -18,8 +19,6 @@
   $nrows = mysqli_num_rows($galdera_result);
   if($nrows==1){
       $galdera_info = $galdera_result->fetch_assoc();
-
-      session_start();
 
       $_SESSION['epostachangepass'] = $eposta;
       $_SESSION['segurtasunErantzuna'] = $galdera_info['erantzuna'];

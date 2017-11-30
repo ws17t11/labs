@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	$xml = simplexml_load_file('xml/counter.xml');
 	if ($xml && $xml->counter > 0) {
 		$xml->counter = $xml->counter - 1;

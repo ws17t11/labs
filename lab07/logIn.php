@@ -1,7 +1,7 @@
 ﻿<?php
   session_start();
   if (isset($_SESSION['eposta'])) { // sesioa hasita badu eta berriz logeatzen saiatzen bada, saioa ixten dugu (por list@)
-    header("Location: logOut.php");
+    echo "<script>location.href='logOut.php';</script>";
     exit();
   }
 ?>

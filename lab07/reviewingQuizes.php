@@ -1,7 +1,7 @@
 <?php
   require('segurtasuna.php');
   if ($_SESSION["mota"] != 2)
-    header("Location: layout.php");
+    echo "<script>location.href='layout.php';</script>";
 ?>
 
 <!DOCTYPE html>
