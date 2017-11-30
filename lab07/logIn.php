@@ -72,6 +72,10 @@
           //HAUTAZKOA 3 -- saiakera kopuru maximoa gainditu ez duela ziurtatu
           $saiakerak_query = "SELECT * FROM saiakerak WHERE eposta= '" . $_POST["eposta"] .  "'";
           $saiakerak_result = $link->query($saiakerak_query);
+          if(mysqli_num_rows($saiakerak_result)==0){
+            echo "Errorea erabiltzailea lortzean datu basetik. Mesedez, saiatu berriz";
+            exit();
+          }
           $saiakerak_info = $saiakerak_result->fetch_assoc();
           $aukerak = $saiakerak_info['aukerak']; //aukera posibleen kopurua lortu
 
@@ -97,7 +101,9 @@
                   $aukerak = 3;
               }
               else {
-                  echo '<font color="red"> ' .$_POST["eposta"]. ' kontua blokeatuta dago: saiakera kopuru maximoa gaindituta </font><br><br>';
+                  echo '<font color="red"> ' .$_POST["eposta"]. ' kontua blokeatuta dago: saiakera kopuru maximoa gaindituta</font><br>';
+                  $zenbatgeratzenda = $itxarote_minutuak-$minutu_dif;
+                  echo '<font color="red">' . "Desblokeatzeko geratzen den denbora: $zenbatgeratzenda minutu</font>";
                   exit();
               }
 

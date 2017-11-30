@@ -53,13 +53,13 @@
         <h3> Galderak errebisatzen </h3> <br/>
         <input type="button" id="showAllBtn" value="Erakutsi Galdera Guztiak" /> edo bilatu galderak ondorengo ezaugarrien bidez: <br/> <br/>
 
-        <form action="" method="GET"> 
+        <form action="" method="GET">
           <input type="radio" name="ezaugarria" value=0 checked="checked" /> ID <br/>
           <input type="radio" name="ezaugarria" value=1 /> Zailtasuna <br/>
           <input type="radio" name="ezaugarria" value=2 /> Gaia <br/> <br/>
           <div id="bilatuGaldera" style="margin-left: 30%; margin-top: -11%;">
-            <input type="text" id="param"/> 
-            <input type="button" id="showSomeBtn" value="Erakutsi galderak" /> 
+            <input type="text" id="param"/>
+            <input type="button" id="showSomeBtn" value="Erakutsi galderak" />
           </div>
         </form>
 
@@ -111,7 +111,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-  
+
   //AJAX kontroladorea sortu galdera guztiak ikusteko
   xhro_show_all = new XMLHttpRequest();
   xhro_show_all.onreadystatechange = function(){
@@ -158,8 +158,8 @@
         $('#gal_gaia').val($('#galTaula').find("tr:eq(" + i + ") td:eq(6)").text());
         $('#galderaAldatzen').show();
         $('#mezuaGalderaAldatzen').html("");
-      } 
-    }  
+      }
+    }
 
   }
 
@@ -179,6 +179,26 @@
 
   //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
   function galderaEguneratu() {
+
+    //balidatu galderaren luzera egokia dela
+    if($("#gal_enun").val().trim().length < 10 ){
+      alert("Galderaren enuntziatuak gutxienez 10 karaktere izan behar ditu!");
+      return false;
+    }
+    //balidatu erantzunak ez daudela hutsik
+    if ($("#gal_ema").val().trim().length < 1  ||
+       $("#gal_oker1").val().trim().length < 1 ||
+       $("#gal_oker2").val().trim().length < 1 ||
+       $("#gal_oker3").val().trim().length < 1 ){
+         alert("Erantzun zuzena bat eta 3 oker sartu behar dira");
+         return false;
+    }
+    //
+    if( $("#gal_gaia").val().trim().length < 1 ){
+      alert("Galderaren gaia sartu behar da");
+      return false;
+    }
+
     var params = "id=" + $("#gal_ID").val() + "&galdera=" + $("#gal_enun").val() + "&ema=" + $("#gal_ema").val() + "&oker1=" + $("#gal_oker1").val() + "&oker2=" + $("#gal_oker2").val() + "&oker3=" + $("#gal_oker3").val() + "&zail=" + $("#gal_zail").val()  + "&gaia=" + $("#gal_gaia").val();
     xhro_save_ques.open("POST", "saveQuestionAJAX.php", true);
     xhro_save_ques.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

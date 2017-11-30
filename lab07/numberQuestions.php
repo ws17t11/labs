@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	$xml = simplexml_load_file('xml/questions.xml');
 	if ($xml && isset($_SESSION['eposta'])) {
 		$n = 0;

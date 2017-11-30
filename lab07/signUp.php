@@ -31,15 +31,16 @@
 			<h2>Quiz: crazy questions</h2>
 		</header>
 
-		<nav class='main' id='n1' role='navigation' style="height:500px">
+		<nav class='main' id='n1' role='navigation' style="height:600px">
 			<?php
 				echo('<span><a href="layout.php">Home</a></span>');
 				echo('<span><a href="/quizzes">Quizzes</a></span>');
 				echo('<span><a href="credits.php">Credits</a></span>');
+				echo('<span><a href="signUp.php">Erregistratu</a></span>');
 	    	?>
 		</nav>
 
-		<section class='main' id='s1' style="text-align: left; height:500px">
+		<section class='main' id='s1' style="text-align: left; height:600px">
 
 			<div>
 				<h3> Signing Up - Erregistroa</h3> <br/>
@@ -156,9 +157,10 @@
 								$sql2 = "INSERT INTO saiakerak (eposta, aukerak) VALUES ('$eposta', 3)";
 
 								//saiakera kopurua adierazten duen taulan sartu ere
-								$sql3 = "INSERT INTO securityquestion (eposta, galdera, erantzuna) VALUES ('$eposta', 3)";
+								$erantzuna_zifratuta = password_hash($erantzuna, PASSWORD_DEFAULT);
+								$sql3 = "INSERT INTO securityquestion (eposta, galdera, erantzuna) VALUES ('$eposta', '$galdera', '$erantzuna_zifratuta')";
 
-						    if ($link->query($sql) === TRUE && $link->query($sql2) === TRUE) {
+						    if ($link->query($sql) === TRUE && $link->query($sql2) === TRUE && $link->query($sql3) === TRUE) {
 
 										/*Counter kontagailua eguneratu*/
 										$xml = simplexml_load_file('xml/counter.xml');
@@ -211,8 +213,7 @@
 	            	Pasahitza (6 karaktere gutzienez *) : <input name="pasahitza" id="pasahitza" type="password" class="text" pattern=".{6,}" onChange="balidatuPasahitza();"> <br/><br/>
 	            	Pasahitza errepikatu (*) : <input name="pasahitza2" id="pasahitza2" type="password" class="text" pattern=".{6,}"> <br/> <br/>
 								Segurtasun galdera (pasahitza ahaztuz gero, galdera hau egingo zaizu errekuperatzeko *)<br>
-								<textarea name="galdera" id="galdera" rows="2" cols="40" placeholder="Zein da lehendabizi suspenditu zidan unibertsitateko irakaslearen abizena">
-								</textarea><br><br>
+								<textarea name="galdera" id="galdera" rows="2" cols="40"></textarea><br><br>
 								Segurtasun galderaren erantzuna (*) : <input name="erantzuna" id="erantzuna" type="text" class="text" pattern=".{1,}" placeholder="Lerdorf"> <br/> <br/>
 	            	Zure argazkia : <input name="irudia" id="irudia" type="file" accept="image/*"> <br/> <br/>
 	            	<input type="submit" id="bidaliBtn" value="Bidali" disabled> <input type="reset" id="garbituBtn" value="Garbitu">

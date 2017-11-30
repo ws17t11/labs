@@ -87,8 +87,8 @@
           <form id='galderaById' name='galderaById' style='text-align:left;' enctype='multipart/form-data'>
                   Galderaren ID: <input name='galderarenId' id='galderarenId' type='number' min='1' value='1'/>
                   <input type='button' id='searchByIdBtn' value='Galdera bilatu'/><br>
-          </form> 
-          <div id='showQuestionByIdResponse'> 
+          </form>
+          <div id='showQuestionByIdResponse'>
           </div>
         <!--Hemen agertuko dira ID bidez bilatutako galderak, AJAX bidez jarriko direnak erabiltzailea botoia sakatzean -->
        </div>
@@ -118,11 +118,11 @@
         ***************************/
 
         xhro_n_quest = new XMLHttpRequest();
-        var eposta_glob = "<%= session.getAttribute(eposta) %>";
-        
+        //var eposta_glob = "<%= session.getAttribute(eposta) %>";
+
         //AJAX kontroladorea sortu galdera kopurua ikusteko
         function eguneratuGalderaKop() {
-          xhro_n_quest.open("GET", "numberQuestions.php?eposta=" + eposta_glob, true);
+          xhro_n_quest.open("GET", "numberQuestions.php", true);
           xhro_n_quest.send("");
         }
 

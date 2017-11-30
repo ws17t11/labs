@@ -21,12 +21,8 @@
 
       session_start();
 
-      $_SESSION['mota'] = 1; // 1: ikaslea
-      if(preg_match('/^web000@ehu\.es$/' , $eposta)==1) {
-        $_SESSION['mota'] = 2; // 2: irakaslea
-      }
-      $_SESSION['SID'] = session_id();
-      $_SESSION['eposta'] = $eposta;
+      $_SESSION['epostachangepass'] = $eposta;
+      $_SESSION['segurtasunErantzuna'] = $galdera_info['erantzuna'];
 
       echo "".$galdera_info['galdera'];
   }

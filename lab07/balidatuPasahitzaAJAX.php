@@ -6,7 +6,7 @@
 
 	if (isset($_GET['pass'])){
 
-		$soapclient = new nusoap_client('http://localhost/lab6/egiaztatuPasahitza.php?wsdl', true);
+		$soapclient = new nusoap_client('http://localhost/lab07/egiaztatuPasahitza.php?wsdl', true);
 		$erantzuna = $soapclient->call('egiaztatuPass', array('pass'=>$_GET['pass']));
 
 		if($erantzuna == "BALIOZKOA"){
