@@ -63,11 +63,15 @@
 		$aukerak = array($galdera_info['zuzena'], $galdera_info['okerra1'], $galdera_info['okerra2'], $galdera_info['okerra3']);
 		shuffle($aukerak);
 
-		echo 	"Enuntziatua: $galdera_info[galdera] <br>";
-		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[0] . '">' . $aukerak[0] . '<br>';
-		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[1] . '">' . $aukerak[1] . '<br>';
-		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[2] . '">' . $aukerak[2] . '<br>';
-		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[3] . '">' . $aukerak[3] . '<br>';
+		if(strcmp($galdera_info['irudia'], "")!=0){
+					echo "<img src=" . '"data:image/jpeg;base64,'.base64_encode( $galdera_info['irudia'] ).'" width="200"/><br><br>';
+		}
+
+		echo 	"$galdera_info[galdera] <br>";
+		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[0] . '"> ' . $aukerak[0] . '<br>';
+		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[1] . '"> ' . $aukerak[1] . '<br>';
+		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[2] . '"> ' . $aukerak[2] . '<br>';
+		echo 	'<input type="radio" name="erantzuna" value="'. $aukerak[3] . '"> ' . $aukerak[3];
 
 		//gorde erantzun zuzena sesioan
 		$_SESSION['onePlayCorrect'] = $galdera_info['zuzena'];

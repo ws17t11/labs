@@ -39,7 +39,7 @@
       }
     ?>
     </header>
-	<nav class='main' id='n1' role='navigation' style="height:600px">
+	<nav class='main' id='n1' role='navigation' style="height:1000px">
     <?php
       if (isset($_SESSION["eposta"])) {
         echo('<span><a href="layout.php">Home</a></span>');
@@ -58,7 +58,7 @@
     ?>
 		<!--<span><a href="layout.html">Log out</a></span> -->
 	</nav>
-    <section class="main" id="s1" style="text-align: left; height:600px">
+    <section class="main" id="s1" style="text-align: left; height:1000px">
     	<div>
     	Atal honetan jolastu ahal izango duzu, bi modu desberdinetan!<br><br>
       One Play: ausazko galdera bat aurkeztuko zaizu. Asmatuko al duzu? Sakatu botoia nahi duzun alditan, eta unero
@@ -69,18 +69,43 @@
       <br><br>
 
       <input type="button" id="onePlayBtn" value="One play" style="text-align:left;">
-      <input type="button" id="subjectBtn" value="Play by subject" style="text-align:left;"><br><br>
+      &emsp;&emsp;<input type="button" id="subjectBtn" value="Play by subject" style="text-align:left;">
 
+      <?php
+            /***************************
+             * Lortu datu baseko gaiak *
+             ***************************/
+
+            //Datu basearekin konexioa sortu
+            include 'connect.php';
+
+            //lortu ausazko galdera bat
+            $sql = "SELECT DISTINCT gaia FROM questions";
+
+            $gaiak_result = $link->query($sql);
+            if(! $gaiak_result){
+                echo "Errorea datu basea atzitzean gaiak lortzeko";
+            }
+            else{
+                echo 'Gaiak: <select id="gaiak">';
+                while($row = $gaiak_result->fetch_assoc()){
+                    echo '<option value="'. $row['gaia'] .'">' . $row['gaia'] . '</option>';
+                }
+                echo '</select>';
+            }
+      ?>
+
+      <br><br>
 
       <div id="questionsDiv">
-        <!-- Hemen agertuko da galdera sartu ondorengo erantzuna -->
+        <!-- Hemen agertuko d(ir)a galdera(k), AJAX bidez jarriko direnak-->
       </div>
 
-      <input type="button" id="checkOnePlayBtn" name="checkOnePlayBtn" value="Bidali" style="display: none;">
-      <input type="button" id="checkSubjectsBtn" name="checkSubjectsBtn" value="Bidali" style="display: none;">
+      <input type="button" id="checkOnePlayBtn" name="checkOnePlayBtn" value="Zuzendu" style="display: none;">
+      <input type="button" id="checkSubjectBtn" name="checkSubjectBtn" value="Zuzendu" style="display: none;">
 
       <div id="resultsDiv">
-        <!-- Hemen agertuko da galdera sartu ondorengo erantzuna -->
+        <!-- Hemen agertuko dira emaitzak, AJAX bidez jarriko direnak-->
       </div>
 
 
@@ -99,7 +124,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
+  $(document).ready(function(){
 
        /*********************
        *** One Play modua ***
@@ -110,28 +135,36 @@
        xhro_oneplay.onreadystatechange = function(){
           if(xhro_oneplay.readyState==4 && xhro_oneplay.status==200){
             document.getElementById("questionsDiv").innerHTML=xhro_oneplay.responseText.trim();
+
+            //dagoeneko erabiltzailea galdera guztiak erantzun baditu, edo galdera sortzean
+            //errorerik egonez gero, <input name="erantzuna"...> ez da agertuko, eta beraz,
+            //erantzunak bidaltzeko botoia ezkutuko dugu.
+            if(! $("input[name='erantzuna']").length){
+                $("#checkOnePlayBtn").hide();
+            }
           }
        }
 
-       //Galdera ikusteko ID bidez botoia sakatzean, AJAX eskaera egin
+
        $("#onePlayBtn").click(function(){
           xhro_oneplay.open("GET", "onePlayAJAX.php", true);
           xhro_oneplay.send("");
 
-          $("#checkSubjectsBtn").hide();
+          $("#checkSubjectBtn").hide();
           $("#checkOnePlayBtn").show();
+          document.getElementById("questionsDiv").innerHTML = "Kargatzen...";
+          document.getElementById("resultsDiv").innerHTML = "";
        });
 
 
-       //AJAX kontroladorea sortu galderak eskatzeko
+       //AJAX kontroladorea sortu galderak zuzentzeko
        xhro_check_oneplay = new XMLHttpRequest();
        xhro_check_oneplay.onreadystatechange = function(){
           if(xhro_check_oneplay.readyState==4 && xhro_check_oneplay.status==200){
-            document.getElementById("resultsDiv").innerHTML=xhro_check_oneplay.responseText.trim();
+              document.getElementById("resultsDiv").innerHTML=xhro_check_oneplay.responseText.trim();
           }
        }
 
-       //Galdera ikusteko ID bidez botoia sakatzean, AJAX eskaera egin
        $("#checkOnePlayBtn").click(function(){
           if (!$("input[name='erantzuna']:checked").val()) {
              alert('Ez dago erantzunik aukeratuta');
@@ -143,7 +176,82 @@
           }
        });
 
-     });
+
+       /****************************
+       *** Play by Subject modua ***
+       *****************************/
+
+       //AJAX kontroladorea sortu galderak eskatzeko
+       xhro_subject = new XMLHttpRequest();
+       xhro_subject.onreadystatechange = function(){
+          if(xhro_subject.readyState==4 && xhro_subject.status==200){
+            document.getElementById("questionsDiv").innerHTML=xhro_subject.responseText.trim();
+          }
+       }
+
+       $("#subjectBtn").click(function(){
+          //lortu erabiltzaile hautatutako gaia
+          var gaia = $("#gaiak").val();
+
+          xhro_subject.open("GET", "playBySubjectAJAX.php?gaia=" + gaia, true);
+          xhro_subject.send("");
+
+          $("#checkSubjectBtn").show();
+          $("#checkOnePlayBtn").hide();
+          document.getElementById("questionsDiv").innerHTML = "Kargatzen...";
+          document.getElementById("resultsDiv").innerHTML = "";
+       });
+
+
+       //AJAX kontroladorea sortu galderak zuzentzeko
+       xhro_check_subject = new XMLHttpRequest();
+       xhro_check_subject.onreadystatechange = function(){
+          if(xhro_check_subject.readyState==4 && xhro_check_subject.status==200){
+            document.getElementById("resultsDiv").innerHTML=xhro_check_subject.responseText.trim();
+          }
+       }
+
+       //Galdera ikusteko ID bidez botoia sakatzean, AJAX eskaera egin
+       $("#checkSubjectBtn").click(function(){
+              //lehendabiziko galderaren erantzuna lortu
+             if($("input[name='erantzuna1']").length){
+               if (!$("input[name='erantzuna1']:checked").val()) {
+                  alert('Aukeratu erantzun bat 1 galderarako');
+                  return false;
+               }
+               else{
+                   var chosen1 = $("input[name='erantzuna1']:checked").val();
+                   var parametroak = "erantzuna1=" + chosen1;
+               }
+             }
+            //bigarren galdera baldin badago, erantzuna lortu
+            if($("input[name='erantzuna2']").length){
+              if (!$("input[name='erantzuna2']:checked").val()) {
+                   alert('Aukeratu erantzun bat 2. galderarako');
+                   return false;
+              }
+              else{
+                  var chosen2 = $("input[name='erantzuna2']:checked").val();
+                  var parametroak = parametroak +  "&erantzuna2=" + chosen2;
+              }
+            }
+            //hirugarren galdera baldin badago, erantzuna lortu
+            if($("input[name='erantzuna3']").length){
+              if (!$("input[name='erantzuna3']:checked").val()) {
+                  alert('Aukeratu erantzun bat 3. galderarako');
+                  return false;
+              }
+              else{
+                  var chosen3 = $("input[name='erantzuna3']:checked").val();
+                  var parametroak = parametroak +  "&erantzuna3=" + chosen3;
+              }
+            }
+
+            xhro_check_subject.open("GET", "checkPlayBySubjectAJAX.php?" + parametroak, true);
+            xhro_check_subject.send("");
+       });
+
+    });
 </script>
 
 </body>
