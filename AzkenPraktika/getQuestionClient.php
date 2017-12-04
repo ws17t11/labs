@@ -6,7 +6,7 @@
 
 	if (isset($_GET['id'])){
 
-		$soapclient = new nusoap_client('http://localhost/ws/labs/AzkenPraktika/getQuestionWZ.php?wsdl', true);
+		$soapclient = new nusoap_client('http://localhost/lab07/getQuestionWZ.php?wsdl', true);
 		$ema = $soapclient->call('getQuestion', array('id'=>$_GET['id']));
 		echo "<br/>";
 		if($ema['err'] == 1){
