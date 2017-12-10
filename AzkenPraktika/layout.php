@@ -43,7 +43,6 @@
     <?php
       if (isset($_SESSION["eposta"])) {
         echo('<span><a href="layout.php">Home</a></span>');
-        echo('<span><a href="quizzes.php">Quizzes</a></span>');
 				echo('<span><a href="credits.php">Credits</a></span>');
         if ($_SESSION["mota"] == 2) {
           echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');

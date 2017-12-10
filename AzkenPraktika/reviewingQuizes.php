@@ -9,7 +9,7 @@
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
   	<title>Quizzes</title>
-      <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
   	<link rel='stylesheet'
   		   type='text/css'
   		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
@@ -40,7 +40,6 @@
 	<nav class='main' id='n1' role='navigation'>
     <?php
         echo('<span><a href="layout.php">Home</a></span>');
-        echo('<span><a href="quizzes.php">Credits</a></span>');
 				echo('<span><a href="credits.php">Credits</a></span>');
         if ($_SESSION["mota"] == 2) {
           echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');
@@ -95,6 +94,7 @@
           Gaia: <input id="gal_gaia" value="" /> <br/> <br/>
           <input type="button" name="cancelBtn" value="Deuseztatu" onclick="deuseztatu();"/>
           <input type="button" name="saveBtn" value="Gorde" onclick="galderaEguneratu();"/>
+          <input type="button" name="eraseBtn" id="eraseBtn2" value="Ezabatu" onclick="galderaEzabatu();"/>
         </form>
       </div>
       <div id="mezuaGalderaAldatzen">
@@ -117,7 +117,8 @@
   xhro_show_all = new XMLHttpRequest();
   xhro_show_all.onreadystatechange = function(){
     if (xhro_show_all.readyState==4 && xhro_show_all.status==200) {
-      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:" +xhro_show_all.responseText;
+      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:<br/>" +xhro_show_all.responseText;
+      $('#galderenLista').show();
     }
   }
 
@@ -131,7 +132,8 @@
   xhro_show_some = new XMLHttpRequest();
   xhro_show_some.onreadystatechange = function(){
     if (xhro_show_some.readyState==4 && xhro_show_some.status==200) {
-      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:" + xhro_show_some.responseText;
+      document.getElementById("galderenLista").innerHTML="Klikatu galdera azaltzen den taularen lerroa hura editatzeko:<br/>" + xhro_show_some.responseText;
+      $('#galderenLista').show();
     }
   }
 
@@ -204,6 +206,27 @@
     xhro_save_ques.open("POST", "saveQuestionAJAX.php", true);
     xhro_save_ques.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhro_save_ques.send(params);
+  }
+
+
+  /*********************
+   ** GALDERA EZABATU **
+  **********************/
+
+  //AJAX kontroladorea sortu galderak ikusteko
+  xhro_erase_ques = new XMLHttpRequest();
+  xhro_erase_ques.onreadystatechange = function(){
+    if (xhro_erase_ques.readyState==4 && xhro_erase_ques.status==200) {
+      $('#galderaAldatzen').hide();
+      $('#galderenLista').hide();
+      document.getElementById("mezuaGalderaAldatzen").innerHTML= "" + xhro_erase_ques.responseText;
+    }
+  }
+
+  //Galderak ezabatzeko botoia sakatzean, AJAX eskaera egin
+  function galderaEzabatu(){
+    xhro_erase_ques.open("GET", "eraseQuestionAJAX.php?id=" + $("#gal_ID").val(), true);
+    xhro_erase_ques.send("");
   }
 
 </script>
