@@ -27,4 +27,6 @@
 				}
 				echo "</table>";
 		}
+
+		mysqli_close($link);
 ?>

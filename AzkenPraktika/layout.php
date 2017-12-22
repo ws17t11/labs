@@ -39,7 +39,7 @@
       }
     ?>
     </header>
-	<nav class='main' id='n1' role='navigation'>
+	<nav class='main' id='n1' role='navigation' style="height:550px">
     <?php
       if (isset($_SESSION["eposta"])) {
         echo('<span><a href="layout.php">Home</a></span>');
@@ -58,17 +58,50 @@
     ?>
 		<!--<span><a href="layout.html">Log out</a></span> -->
 	</nav>
-    <section class="main" id="s1">
+    <section class="main" id="s1" style="height:550px">
     	<div>
-    	Galderak erantzutea gustuko duzu? Hala bada, orrialde hau zuretzat pentsatuta dago!<br>
-      Bazenekien erabiltzaile erregistratuak galderak sortzeko aukera dutela?<br>
-      Ikaslea baldin bazara, ez itxaron gehiago eta <a href="signUp.php">erregistratu</a>!
+      	Galderak erantzutea gustuko duzu? Hala bada, orrialde hau zuretzat pentsatuta dago!<br>
+        Bazenekien erabiltzaile erregistratuak galderak sortzeko aukera dutela?<br>
+        Ikaslea baldin bazara, ez itxaron gehiago eta <a href="signUp.php">erregistratu</a>!
+        <br/> <br/>
+        <strong> Top 10 Quizzers - Global Ranking </strong>
     	</div>
+      <div id="top10">
+        <!-- Hemen agertuko dira jokalari onenak -->
+      </div>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
 		<a href='https://github.com'>Link GITHUB</a>
 	</footer>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+
+  var mode = 5;
+
+  //AJAX kontroladorea sortu galdera guztiak ikusteko
+  xhro_top = new XMLHttpRequest();
+  xhro_top.onreadystatechange = function(){
+    if (xhro_top.readyState==4 && xhro_top.status==200) {
+      document.getElementById("top10").innerHTML = xhro_top.responseText;
+    }
+  }
+
+  xhro_top.open("GET", "top10AJAX.php?mode=" + mode, true);
+  xhro_top.send("");
+
+  //Galderak ikusteko botoia sakatzean, AJAX eskaera egin
+  function aldatuModua(mode){
+    xhro_top.open("GET", "top10AJAX.php?mode=" + mode, true);
+    xhro_top.send("");
+  }
+
+</script>
+
 </body>
 </html>

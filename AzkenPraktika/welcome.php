@@ -41,7 +41,6 @@
 		<nav class='main' id='n1' role='navigation'>
 			<?php
 				echo('<span><a href="layout.php">Home</a></span>');
-				echo('<span><a href="quizzes.php">Credits</a></span>');
 				echo('<span><a href="credits.php">Credits</a></span>');
 				if ($_SESSION["mota"] == 2) {
 					echo('<span><a href="reviewingQuizes.php">Galderak errebisatu</a></span>');
